@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RaptorFam KE — Gallery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Space+Grotesk:wght@300;400;500;600;700&family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{--raptor-black:#0a0a0a;--raptor-deep:#111;--raptor-card:#161616;--raptor-border:rgba(255,255,255,0.08);--raptor-red:#FF2D2D;--raptor-orange:#FF6B1A;--raptor-white:#F5F0E8;--raptor-muted:rgba(245,240,232,0.5);--font-display:'Bebas Neue',sans-serif;--font-body:'DM Sans',sans-serif;--font-ui:'Space Grotesk',sans-serif}
+  body{background:var(--raptor-black);color:var(--raptor-white);font-family:var(--font-body);cursor:none}
+  .cursor{width:12px;height:12px;background:var(--raptor-red);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:difference}
+  .cursor-ring{width:36px;height:36px;border:1px solid rgba(255,45,45,0.5);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%)}
+  nav{position:fixed;top:0;left:0;right:0;z-index:900;padding:1.2rem 3rem;display:flex;justify-content:space-between;background:rgba(10,10,10,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--raptor-border)}
+  .nav-logo{font-family:var(--font-display);font-size:1.8rem;letter-spacing:0.12em;color:var(--raptor-white);text-decoration:none}
+  .nav-logo span{color:var(--raptor-red)}
+  .nav-links{display:flex;gap:2.5rem;list-style:none}
+  .nav-links a{font-family:var(--font-ui);font-size:0.78rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--raptor-muted);text-decoration:none}
+  .nav-cta{font-family:var(--font-ui);font-size:0.78rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;padding:0.65rem 1.6rem;background:var(--raptor-red);color:var(--raptor-white);text-decoration:none;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%)}
+  .hamburger{display:none;flex-direction:column;gap:6px;background:none;border:none}
+  .hamburger span{width:28px;height:2px;background:var(--raptor-white)}
+  .mobile-menu{position:fixed;top:70px;left:-100%;width:100%;height:calc(100vh - 70px);background:var(--raptor-black);z-index:899;transition:left 0.3s;padding:2rem}
+  .mobile-menu.active{left:0}
+  .mobile-menu .nav-links{flex-direction:column;gap:2rem;display:flex}
+  .section-inner{max-width:1280px;margin:0 auto;padding:6rem 3rem}
+  .section-label{font-family:var(--font-ui);font-size:0.68rem;font-weight:600;letter-spacing:0.35em;text-transform:uppercase;color:var(--raptor-red);margin-bottom:1rem;display:flex;align-items:center;gap:0.8rem}
+  .section-label::before{content:'';display:block;width:20px;height:1px;background:var(--raptor-red)}
+  .section-title{font-family:var(--font-display);font-size:clamp(3rem,6vw,5.5rem);line-height:0.9;color:var(--raptor-white);margin-bottom:1.5rem}
+  .filter-buttons{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2rem}
+  .filter-btn{font-family:var(--font-ui);font-size:0.7rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;padding:0.6rem 1.4rem;background:transparent;border:1px solid var(--raptor-border);color:var(--raptor-muted);clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%)}
+  .filter-btn.active{background:var(--raptor-red);border-color:var(--raptor-red);color:var(--raptor-white)}
+  .masonry{column-count:3;column-gap:1.5px}
+  .masonry-item{break-inside:avoid;margin-bottom:1.5px;cursor:pointer;overflow:hidden}
+  .masonry-item img{width:100%;display:block;transition:transform 0.3s}
+  .masonry-item:hover img{transform:scale(1.02)}
+  .lightbox{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:2000;display:none;justify-content:center;align-items:center}
+  .lightbox.active{display:flex}
+  .lightbox img{max-width:90%;max-height:90%}
+  footer{background:var(--raptor-deep);border-top:1px solid var(--raptor-border)}
+  .footer-inner{max-width:1280px;margin:0 auto;padding:4rem 3rem 2rem}
+  .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
+  .footer-brand-name{font-family:var(--font-display);font-size:2.5rem;letter-spacing:0.1em;margin-bottom:1rem}
+  .footer-brand-name span{color:var(--raptor-red)}
+  .footer-heading{font-family:var(--font-ui);font-size:0.65rem;font-weight:700;letter-spacing:0.28em;text-transform:uppercase;color:var(--raptor-red);margin-bottom:1.2rem}
+  .footer-links{list-style:none}
+  .footer-links a{font-size:0.88rem;color:var(--raptor-muted);text-decoration:none}
+  .footer-bottom{border-top:1px solid var(--raptor-border);padding-top:1.5rem;display:flex;justify-content:space-between}
+  @media(max-width:900px){nav{padding:1rem 1.5rem}.nav-links{display:none}.hamburger{display:flex}.section-inner{padding:4rem 1.5rem}.masonry{column-count:2}.footer-grid{grid-template-columns:1fr 1fr}}
+  @media(max-width:600px){.masonry{column-count:1}}
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div><div class="cursor-ring" id="cursorRing"></div>
+<nav><a href="index.html" class="nav-logo">RAPTOR<span>FAM</span></a><button class="hamburger" id="hamburger"><span></span><span></span><span></span></button><ul class="nav-links"><li><a href="fleet.html">Fleet</a></li><li><a href="booking.html">Book a Ride</a></li><li><a href="culture.html">Culture</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="contact.html">Contact</a></li></ul><a href="booking.html" class="nav-cta">Book Now</a></nav>
+<div class="mobile-menu" id="mobileMenu"><ul class="nav-links"><li><a href="fleet.html">Fleet</a></li><li><a href="booking.html">Book a Ride</a></li><li><a href="culture.html">Culture</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+<div class="section-inner"><div class="section-label">Visual Archive</div><h1 class="section-title">THE GALLERY</h1>
+<div class="filter-buttons"><button class="filter-btn active" data-filter="all">All</button><button class="filter-btn" data-filter="exterior">Exteriors</button><button class="filter-btn" data-filter="interior">Interiors</button><button class="filter-btn" data-filter="event">Events</button></div>
+<div class="masonry" id="masonry"></div></div>
+<div class="lightbox" id="lightbox"><img id="lightboxImg" src="" alt=""></div>
+<footer><div class="footer-inner"><div class="footer-grid"><div class="footer-brand"><div class="footer-brand-name">RAPTOR<span>FAM</span> KE</div></div><div><div class="footer-heading">Fleet</div><ul class="footer-links"><li><a href="fleet.html">Mood</a></li><li><a href="fleet.html">MoneyFest</a></li><li><a href="fleet.html">Matrix</a></li></ul></div><div><div class="footer-heading">Connect</div><ul class="footer-links"><li><a href="culture.html">Our Story</a></li><li><a href="gallery.html">Gallery</a></li></ul></div></div><div class="footer-bottom"><span>© 2025 RaptorFam KE</span><span>Built for the streets ❤️</span></div></div></footer>
+<script>
+const c=document.getElementById('cursor'),r=document.getElementById('cursorRing');let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
+function anim(){c.style.left=mx+'px';c.style.top=my+'px';rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;r.style.left=rx+'px';r.style.top=ry+'px';requestAnimationFrame(anim)}anim();
+document.querySelectorAll('a,button,.masonry-item').forEach(el=>{el.addEventListener('mouseenter',()=>{c.style.transform='translate(-50%,-50%) scale(2)';r.style.transform='translate(-50%,-50%) scale(1.4)'});el.addEventListener('mouseleave',()=>{c.style.transform='translate(-50%,-50%) scale(1)';r.style.transform='translate(-50%,-50%) scale(1)'})});
+const images=[{src:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=85',category:'exterior'},{src:'https://images.unsplash.com/photo-1519003722824-194d4455a60c?w=600&q=85',category:'exterior'},{src:'https://images.unsplash.com/photo-1547626387-71e5fe1c2048?w=600&q=85',category:'interior'},{src:'https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?w=600&q=85',category:'interior'},{src:'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=600&q=85',category:'exterior'},{src:'https://images.unsplash.com/photo-1570125909232-eb263c188f7e?w=600&q=85',category:'exterior'},{src:'https://images.unsplash.com/photo-1540420828642-fca2c5c18abe?w=600&q=85',category:'event'},{src:'https://images.unsplash.com/photo-1614680376573-df3480f0c6ff?w=600&q=85',category:'event'},{src:'https://images.unsplash.com/photo-1543465077-db45d34b88a5?w=600&q=85',category:'event'},{src:'https://images.unsplash.com/photo-1597404294360-feeeda04612e?w=600&q=85',category:'exterior'}];
+function renderGallery(filter){const container=document.getElementById('masonry');container.innerHTML='';const filtered=filter==='all'?images:images.filter(i=>i.category===filter);filtered.forEach(img=>{const div=document.createElement('div');div.className='masonry-item';div.innerHTML=`<img src="${img.src}" loading="lazy">`;div.addEventListener('click',()=>{document.getElementById('lightboxImg').src=img.src;document.getElementById('lightbox').classList.add('active')});container.appendChild(div)})}
+renderGallery('all');
+document.querySelectorAll('.filter-btn').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderGallery(btn.dataset.filter)})});
+document.getElementById('lightbox').addEventListener('click',function(e){if(e.target===this)this.classList.remove('active')});
+const hamburger=document.getElementById('hamburger'),mobileMenu=document.getElementById('mobileMenu');hamburger.addEventListener('click',()=>{mobileMenu.classList.toggle('active')});
+</script>
+</body>
+</html>
