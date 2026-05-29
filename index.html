@@ -5,1125 +5,446 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RaptorFam KE — Book the Nganya</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Space+Grotesk:wght@300;400;500;600;700&family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --raptor-black: #0a0a0a;
-    --raptor-deep: #111111;
-    --raptor-card: #161616;
-    --raptor-border: rgba(255,255,255,0.08);
-    --raptor-red: #FF2D2D;
-    --raptor-orange: #FF6B1A;
-    --raptor-yellow: #FFD600;
-    --raptor-white: #F5F0E8;
-    --raptor-muted: rgba(245,240,232,0.5);
-    --raptor-faint: rgba(245,240,232,0.12);
-    --font-display: 'Bebas Neue', sans-serif;
-    --font-heading: 'Black Han Sans', sans-serif;
-    --font-body: 'DM Sans', sans-serif;
-    --font-ui: 'Space Grotesk', sans-serif;
+    --black: #0a0a0a;
+    --white: #f5f0e8;
+    --orange: #ff5c00;
+    --gold: #ffb800;
+    --green: #00ff7f;
+    --dark: #111111;
+    --mid: #1a1a1a;
   }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
   html { scroll-behavior: smooth; }
 
   body {
-    background: var(--raptor-black);
-    color: var(--raptor-white);
-    font-family: var(--font-body);
-    font-size: 16px;
-    line-height: 1.6;
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Space Grotesk', sans-serif;
     overflow-x: hidden;
-    cursor: none;
   }
 
-  /* CUSTOM CURSOR */
-  .cursor {
-    width: 12px; height: 12px;
-    background: var(--raptor-red);
-    border-radius: 50%;
-    position: fixed;
-    pointer-events: none;
-    z-index: 9999;
-    transform: translate(-50%, -50%);
-    transition: transform 0.1s, background 0.2s;
-    mix-blend-mode: difference;
-  }
-  .cursor-ring {
-    width: 36px; height: 36px;
-    border: 1px solid rgba(255,45,45,0.5);
-    border-radius: 50%;
-    position: fixed;
-    pointer-events: none;
-    z-index: 9998;
-    transform: translate(-50%, -50%);
-    transition: all 0.15s ease;
-  }
-  body:hover .cursor { opacity: 1; }
-
-  /* SCROLLBAR */
-  ::-webkit-scrollbar { width: 3px; }
-  ::-webkit-scrollbar-track { background: var(--raptor-black); }
-  ::-webkit-scrollbar-thumb { background: var(--raptor-red); border-radius: 2px; }
-
-  /* NOISE OVERLAY */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 1000;
-    opacity: 0.4;
-  }
-
-  /* NAV */
+  /* ── NAV ── */
   nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 900;
-    padding: 1.2rem 3rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 4rem;
     background: rgba(10,10,10,0.85);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--raptor-border);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,92,0,0.2);
   }
-
   .nav-logo {
-    font-family: var(--font-display);
+    font-family: 'Bebas Neue', sans-serif;
     font-size: 1.8rem;
-    letter-spacing: 0.12em;
-    color: var(--raptor-white);
+    letter-spacing: 4px;
+    color: var(--orange);
     text-decoration: none;
   }
-  .nav-logo span { color: var(--raptor-red); }
-
-  .nav-links {
-    display: flex;
-    gap: 2.5rem;
-    list-style: none;
-  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
   .nav-links a {
-    font-family: var(--font-ui);
-    font-size: 0.78rem;
-    font-weight: 500;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--raptor-muted);
-    text-decoration: none;
-    transition: color 0.2s;
-    position: relative;
+    color: var(--white); text-decoration: none;
+    font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase;
+    opacity: 0.75; transition: opacity 0.2s;
   }
-  .nav-links a::after {
-    content: '';
-    position: absolute;
-    bottom: -3px; left: 0;
-    width: 0; height: 1px;
-    background: var(--raptor-red);
-    transition: width 0.3s;
-  }
-  .nav-links a:hover { color: var(--raptor-white); }
-  .nav-links a:hover::after { width: 100%; }
-
+  .nav-links a:hover { opacity: 1; color: var(--orange); }
   .nav-cta {
-    font-family: var(--font-ui);
-    font-size: 0.78rem;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 0.65rem 1.6rem;
-    background: var(--raptor-red);
-    color: var(--raptor-white);
-    border: none;
-    cursor: none;
-    text-decoration: none;
-    transition: background 0.2s, transform 0.15s;
-    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    background: var(--orange); color: #fff;
+    padding: 0.6rem 1.6rem; border-radius: 2px;
+    font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase;
+    text-decoration: none; font-weight: 700;
+    transition: background 0.2s;
   }
-  .nav-cta:hover {
-    background: var(--raptor-orange);
-    transform: translateY(-1px);
-  }
+  .nav-cta:hover { background: #ff7a33; }
 
-  /* HERO */
+  /* ── HERO ── */
   .hero {
-    min-height: 100vh;
-    position: relative;
-    display: grid;
-    place-items: center;
-    overflow: hidden;
-    padding-top: 80px;
+    position: relative; height: 100vh; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
   }
-
-  .hero-bg {
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 70% 50% at 20% 60%, rgba(255,45,45,0.12) 0%, transparent 70%),
-      radial-gradient(ellipse 60% 40% at 80% 30%, rgba(255,107,26,0.07) 0%, transparent 60%),
-      var(--raptor-black);
+  .hero-slides { position: absolute; inset: 0; }
+  .hero-slide {
+    position: absolute; inset: 0;
+    background-size: cover; background-position: center;
+    opacity: 0; transition: opacity 1.2s ease;
   }
-
-  .hero-img-grid {
-    position: absolute;
-    inset: 0;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    gap: 3px;
-    opacity: 0.18;
+  .hero-slide.active { opacity: 1; }
+  .hero-slide::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.3) 60%, rgba(255,92,0,0.15) 100%);
   }
-  .hero-img-grid-cell {
-    background: var(--raptor-faint);
-    overflow: hidden;
-  }
-  .hero-img-grid-cell img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    filter: grayscale(60%) contrast(1.2);
-  }
-
-  .hero-grid-overlay {
-    position: absolute;
-    inset: 0;
-    background:
-      linear-gradient(to bottom, rgba(10,10,10,0.3) 0%, transparent 30%, rgba(10,10,10,0.8) 70%, var(--raptor-black) 100%),
-      linear-gradient(to right, var(--raptor-black) 0%, transparent 20%, transparent 80%, var(--raptor-black) 100%);
-  }
-
   .hero-content {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    max-width: 1100px;
-    padding: 0 2rem;
+    position: relative; z-index: 2; text-align: center;
+    padding: 0 2rem; max-width: 900px;
   }
-
   .hero-eyebrow {
-    font-family: var(--font-ui);
-    font-size: 0.72rem;
-    font-weight: 500;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    color: var(--raptor-red);
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
+    font-size: 0.75rem; letter-spacing: 6px; text-transform: uppercase;
+    color: var(--orange); margin-bottom: 1.5rem;
+    animation: fadeUp 1s ease 0.3s both;
   }
-  .hero-eyebrow::before, .hero-eyebrow::after {
-    content: '';
-    display: block;
-    width: 40px; height: 1px;
-    background: var(--raptor-red);
-    opacity: 0.6;
-  }
-
   .hero-title {
-    font-family: var(--font-display);
-    font-size: clamp(5rem, 14vw, 13rem);
-    line-height: 0.88;
-    letter-spacing: 0.02em;
-    color: var(--raptor-white);
-    margin-bottom: 0.3rem;
-  }
-  .hero-title .outline {
-    -webkit-text-stroke: 1.5px rgba(245,240,232,0.35);
-    color: transparent;
-  }
-  .hero-title .accent { color: var(--raptor-red); }
-
-  .hero-subtitle {
-    font-family: var(--font-body);
-    font-size: clamp(1rem, 2.2vw, 1.3rem);
-    font-weight: 300;
-    color: var(--raptor-muted);
-    max-width: 560px;
-    margin: 2rem auto 3rem;
-    font-style: italic;
-    letter-spacing: 0.02em;
-  }
-
-  .hero-actions {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  .btn-primary {
-    font-family: var(--font-ui);
-    font-size: 0.82rem;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    padding: 1rem 2.8rem;
-    background: var(--raptor-red);
-    color: var(--raptor-white);
-    border: none;
-    cursor: none;
-    text-decoration: none;
-    display: inline-block;
-    transition: all 0.2s;
-    clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
-    position: relative;
-    overflow: hidden;
-  }
-  .btn-primary::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
-    transform: translateX(-100%);
-    transition: transform 0.5s;
-  }
-  .btn-primary:hover::before { transform: translateX(100%); }
-  .btn-primary:hover { background: var(--raptor-orange); transform: translateY(-2px); }
-
-  .btn-ghost {
-    font-family: var(--font-ui);
-    font-size: 0.82rem;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    padding: 1rem 2.8rem;
-    background: transparent;
-    color: var(--raptor-white);
-    border: 1px solid rgba(245,240,232,0.25);
-    cursor: none;
-    text-decoration: none;
-    display: inline-block;
-    transition: all 0.2s;
-    clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
-  }
-  .btn-ghost:hover {
-    border-color: var(--raptor-red);
-    color: var(--raptor-red);
-    transform: translateY(-2px);
-  }
-
-  .hero-scroll {
-    position: absolute;
-    bottom: 2.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    font-family: var(--font-ui);
-    font-size: 0.65rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--raptor-muted);
-  }
-  .hero-scroll-line {
-    width: 1px;
-    height: 50px;
-    background: linear-gradient(to bottom, var(--raptor-red), transparent);
-    animation: scrollPulse 2s infinite;
-  }
-  @keyframes scrollPulse {
-    0%, 100% { opacity: 0.4; transform: scaleY(1); }
-    50% { opacity: 1; transform: scaleY(1.2); }
-  }
-
-  /* TICKER */
-  .ticker-wrap {
-    background: var(--raptor-red);
-    overflow: hidden;
-    padding: 0.75rem 0;
-    position: relative;
-    z-index: 2;
-  }
-  .ticker-track {
-    display: flex;
-    width: max-content;
-    animation: tickerScroll 25s linear infinite;
-  }
-  .ticker-item {
-    font-family: var(--font-display);
-    font-size: 1.1rem;
-    letter-spacing: 0.08em;
-    color: var(--raptor-white);
-    padding: 0 3rem;
-    white-space: nowrap;
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-  }
-  .ticker-item span {
-    width: 6px; height: 6px;
-    background: rgba(255,255,255,0.6);
-    border-radius: 50%;
-    display: inline-block;
-  }
-  @keyframes tickerScroll {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
-
-  /* SECTION COMMONS */
-  section { position: relative; }
-
-  .section-inner {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 6rem 3rem;
-  }
-
-  .section-label {
-    font-family: var(--font-ui);
-    font-size: 0.68rem;
-    font-weight: 600;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    color: var(--raptor-red);
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-  }
-  .section-label::before {
-    content: '';
-    display: block;
-    width: 20px; height: 1px;
-    background: var(--raptor-red);
-  }
-
-  .section-title {
-    font-family: var(--font-display);
-    font-size: clamp(3rem, 6vw, 5.5rem);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(5rem, 13vw, 12rem);
     line-height: 0.9;
-    letter-spacing: 0.02em;
-    color: var(--raptor-white);
-    margin-bottom: 1.5rem;
+    color: var(--white);
+    text-shadow: 0 0 80px rgba(255,92,0,0.4);
+    animation: fadeUp 1s ease 0.5s both;
+    letter-spacing: 4px;
   }
+  .hero-title span { color: var(--orange); }
+  .hero-sub {
+    font-size: 1.1rem; opacity: 0.7; margin: 1.5rem 0 2.5rem;
+    line-height: 1.7;
+    animation: fadeUp 1s ease 0.7s both;
+  }
+  .hero-btns {
+    display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+    animation: fadeUp 1s ease 0.9s both;
+  }
+  .btn-primary {
+    background: var(--orange); color: #fff;
+    padding: 0.9rem 2.5rem; text-decoration: none;
+    font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    font-size: 0.85rem; border-radius: 2px;
+    transition: transform 0.2s, background 0.2s;
+    display: inline-block;
+  }
+  .btn-primary:hover { transform: translateY(-2px); background: #ff7a33; }
+  .btn-outline {
+    border: 1px solid rgba(255,255,255,0.4); color: var(--white);
+    padding: 0.9rem 2.5rem; text-decoration: none;
+    font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+    font-size: 0.85rem; border-radius: 2px;
+    transition: border-color 0.2s, color 0.2s;
+    display: inline-block;
+  }
+  .btn-outline:hover { border-color: var(--orange); color: var(--orange); }
 
-  /* STATS BAR */
+  /* Stats bar */
   .stats-bar {
-    background: var(--raptor-deep);
-    border-top: 1px solid var(--raptor-border);
-    border-bottom: 1px solid var(--raptor-border);
+    background: var(--orange); padding: 1rem 4rem;
+    display: flex; gap: 4rem; justify-content: center; flex-wrap: wrap;
   }
-  .stats-grid {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 3rem;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0;
-  }
-  .stat-item {
-    padding: 1.5rem 2rem;
-    border-right: 1px solid var(--raptor-border);
-    text-align: center;
-  }
-  .stat-item:last-child { border-right: none; }
-  .stat-number {
-    font-family: var(--font-display);
-    font-size: 3.5rem;
-    color: var(--raptor-red);
-    display: block;
-    line-height: 1;
-    margin-bottom: 0.4rem;
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem; letter-spacing: 2px; color: #fff;
   }
   .stat-label {
-    font-family: var(--font-ui);
-    font-size: 0.72rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--raptor-muted);
+    font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;
+    color: rgba(255,255,255,0.8);
   }
 
-  /* FLEET SECTION */
-  .fleet-section { background: var(--raptor-black); }
-
-  .fleet-header {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    margin-bottom: 3.5rem;
+  /* Ticker */
+  .ticker {
+    background: var(--dark); border-top: 1px solid rgba(255,92,0,0.2);
+    border-bottom: 1px solid rgba(255,92,0,0.2);
+    overflow: hidden; padding: 0.8rem 0;
   }
+  .ticker-inner {
+    display: flex; gap: 4rem; white-space: nowrap;
+    animation: ticker 25s linear infinite;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem; letter-spacing: 3px;
+    color: var(--orange);
+  }
+  .ticker-inner span { opacity: 0.5; color: var(--white); }
+
+  /* ── FLEET ── */
+  section { padding: 6rem 4rem; }
+  .section-label {
+    font-size: 0.7rem; letter-spacing: 5px; text-transform: uppercase;
+    color: var(--orange); margin-bottom: 1rem;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    line-height: 1; margin-bottom: 1rem;
+  }
+  .section-title em { font-style: normal; color: var(--orange); }
+  .section-intro { opacity: 0.6; max-width: 560px; line-height: 1.7; margin-bottom: 3rem; font-size: 0.95rem; }
 
   .fleet-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5px; background: rgba(255,92,0,0.15);
   }
-
   .fleet-card {
-    position: relative;
-    overflow: hidden;
-    cursor: none;
-    aspect-ratio: 4/3;
-    background: var(--raptor-card);
+    position: relative; overflow: hidden; aspect-ratio: 4/3;
+    cursor: pointer; background: var(--mid);
+    text-decoration: none; color: var(--white); display: block;
   }
-  .fleet-card:first-child {
-    grid-column: span 2;
-    aspect-ratio: 16/9;
-  }
-
   .fleet-card img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.4s;
-    filter: saturate(0.8) contrast(1.05);
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.6s ease;
+    filter: brightness(0.8);
   }
-  .fleet-card:hover img {
-    transform: scale(1.06);
-    filter: saturate(1.1) contrast(1.1);
-  }
-
+  .fleet-card:hover img { transform: scale(1.06); filter: brightness(1); }
   .fleet-card-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 55%);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 1.8rem;
-    transition: opacity 0.3s;
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 60%);
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 1.5rem;
   }
-
-  .fleet-tag {
-    font-family: var(--font-ui);
-    font-size: 0.62rem;
-    font-weight: 600;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--raptor-red);
-    margin-bottom: 0.4rem;
+  .fleet-badge {
+    background: var(--orange); color: #fff;
+    font-size: 0.65rem; letter-spacing: 2px; padding: 0.2rem 0.6rem;
+    text-transform: uppercase; font-weight: 700;
+    display: inline-block; margin-bottom: 0.5rem; width: fit-content;
   }
   .fleet-name {
-    font-family: var(--font-display);
-    font-size: 2.4rem;
-    letter-spacing: 0.04em;
-    color: var(--raptor-white);
-    line-height: 1;
-    margin-bottom: 0.6rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem; letter-spacing: 3px; line-height: 1;
+    color: var(--white);
   }
-  .fleet-card:first-child .fleet-name { font-size: 3.2rem; }
   .fleet-desc {
-    font-size: 0.82rem;
-    color: var(--raptor-muted);
-    max-width: 280px;
+    font-size: 0.8rem; opacity: 0.7; margin-top: 0.3rem;
+    line-height: 1.5;
   }
-
-  .fleet-badge {
-    position: absolute;
-    top: 1.2rem; right: 1.2rem;
-    background: var(--raptor-red);
-    font-family: var(--font-ui);
-    font-size: 0.6rem;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: white;
-    padding: 0.3rem 0.8rem;
-    clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+  .fleet-explore {
+    margin-top: 0.7rem; font-size: 0.72rem; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--orange); font-weight: 700;
+    opacity: 0; transform: translateX(-8px);
+    transition: opacity 0.3s, transform 0.3s;
   }
+  .fleet-card:hover .fleet-explore { opacity: 1; transform: translateX(0); }
+  .fleet-card.featured { grid-column: span 2; aspect-ratio: 16/7; }
+  @media (max-width: 768px) { .fleet-card.featured { grid-column: span 1; aspect-ratio: 4/3; } }
 
-  /* BOOKING SECTION */
-  .booking-section {
-    background: var(--raptor-deep);
-    border-top: 1px solid var(--raptor-border);
-  }
-
-  .booking-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6rem;
+  /* ── BOOK ── */
+  #book { background: var(--mid); }
+  .book-inner {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem;
     align-items: start;
   }
-
-  .booking-form {
-    background: var(--raptor-card);
-    border: 1px solid var(--raptor-border);
-    padding: 3rem;
-    position: relative;
+  @media (max-width: 900px) { .book-inner { grid-template-columns: 1fr; gap: 3rem; } }
+  .book-form { display: flex; flex-direction: column; gap: 1.2rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-group label {
+    font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;
+    opacity: 0.6;
   }
-  .booking-form::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--raptor-red), var(--raptor-orange), var(--raptor-yellow));
-  }
-
-  .form-title {
-    font-family: var(--font-display);
-    font-size: 2.5rem;
-    letter-spacing: 0.04em;
-    margin-bottom: 0.4rem;
-  }
-  .form-subtitle {
-    font-size: 0.88rem;
-    color: var(--raptor-muted);
-    margin-bottom: 2.5rem;
-  }
-
-  .form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-  }
-
-  .form-group {
-    margin-bottom: 1.2rem;
-  }
-  .form-label {
-    display: block;
-    font-family: var(--font-ui);
-    font-size: 0.68rem;
-    font-weight: 600;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--raptor-muted);
-    margin-bottom: 0.5rem;
-  }
-  .form-input, .form-select, .form-textarea {
-    width: 100%;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid var(--raptor-border);
-    color: var(--raptor-white);
-    font-family: var(--font-body);
-    font-size: 0.9rem;
-    padding: 0.85rem 1rem;
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--white); padding: 0.9rem 1rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.9rem; border-radius: 2px;
+    transition: border-color 0.2s;
     outline: none;
-    transition: border-color 0.2s, background 0.2s;
-    appearance: none;
-    -webkit-appearance: none;
   }
-  .form-input:focus, .form-select:focus, .form-textarea:focus {
-    border-color: var(--raptor-red);
-    background: rgba(255,45,45,0.04);
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--orange);
   }
-  .form-input::placeholder { color: rgba(245,240,232,0.25); }
-  .form-select option { background: var(--raptor-card); color: var(--raptor-white); }
-  .form-textarea { resize: vertical; min-height: 100px; }
-
-  .form-cars {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.75rem;
+  .form-group select option { background: var(--dark); }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+  .submit-btn {
+    background: var(--orange); color: #fff;
+    border: none; padding: 1.1rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase;
+    font-weight: 700; cursor: pointer; border-radius: 2px;
+    transition: background 0.2s, transform 0.2s;
     margin-top: 0.5rem;
   }
-  .car-option {
-    position: relative;
-  }
-  .car-option input { position: absolute; opacity: 0; pointer-events: none; }
-  .car-option label {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    padding: 0.7rem 1rem;
-    background: rgba(255,255,255,0.03);
-    border: 1px solid var(--raptor-border);
-    cursor: none;
-    transition: all 0.2s;
-    font-size: 0.84rem;
-    font-family: var(--font-ui);
-    font-weight: 500;
-  }
-  .car-option input:checked + label {
-    border-color: var(--raptor-red);
-    background: rgba(255,45,45,0.1);
-    color: var(--raptor-red);
-  }
-  .car-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: var(--raptor-red);
-    flex-shrink: 0;
-  }
-
-  .form-submit {
-    width: 100%;
-    margin-top: 2rem;
-    padding: 1.1rem;
-    background: var(--raptor-red);
-    color: var(--raptor-white);
-    border: none;
-    font-family: var(--font-ui);
-    font-size: 0.82rem;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    cursor: none;
-    transition: all 0.2s;
-    clip-path: polygon(14px 0%, 100% 0%, calc(100% - 14px) 100%, 0% 100%);
-    position: relative;
-    overflow: hidden;
-  }
-  .form-submit::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
-    transform: translateX(-100%);
-    transition: transform 0.5s;
-  }
-  .form-submit:hover::before { transform: translateX(100%); }
-  .form-submit:hover { background: #ff1a1a; }
-
-  .booking-info { padding-top: 1rem; }
-
-  .info-title {
-    font-family: var(--font-display);
-    font-size: 3.5rem;
-    line-height: 0.9;
-    margin-bottom: 1.5rem;
-  }
-  .info-title .dim { color: var(--raptor-muted); }
-
-  .info-text {
-    font-size: 1rem;
-    font-weight: 300;
-    color: var(--raptor-muted);
-    line-height: 1.8;
-    margin-bottom: 2.5rem;
-  }
-
-  .info-features {
-    display: flex;
-    flex-direction: column;
-    gap: 1.2rem;
-    margin-bottom: 3rem;
-  }
-  .info-feat {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    padding: 1rem 1.5rem;
-    border-left: 2px solid var(--raptor-red);
-    background: rgba(255,45,45,0.03);
-  }
-  .feat-icon {
-    font-size: 1.4rem;
-    flex-shrink: 0;
-    margin-top: 0.1rem;
-  }
-  .feat-title {
-    font-family: var(--font-ui);
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--raptor-white);
-    margin-bottom: 0.2rem;
-    letter-spacing: 0.04em;
-  }
-  .feat-desc {
-    font-size: 0.8rem;
-    color: var(--raptor-muted);
-  }
-
-  .price-cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--raptor-border);
-    border: 1px solid var(--raptor-border);
-  }
+  .submit-btn:hover { background: #ff7a33; transform: translateY(-1px); }
+  .book-side { padding-top: 1rem; }
+  .book-features { list-style: none; margin: 2rem 0; display: flex; flex-direction: column; gap: 1.2rem; }
+  .book-feature { display: flex; gap: 1rem; align-items: flex-start; }
+  .feature-icon { font-size: 1.4rem; flex-shrink: 0; }
+  .feature-text { font-size: 0.9rem; line-height: 1.6; opacity: 0.85; }
+  .feature-text strong { display: block; color: var(--white); opacity: 1; }
+  .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(255,92,0,0.2); margin-top: 2rem; }
   .price-card {
-    background: var(--raptor-card);
-    padding: 1.5rem 1.2rem;
-    text-align: center;
+    background: var(--dark); padding: 1.5rem; text-align: center;
   }
-  .price-card.featured {
-    background: rgba(255,45,45,0.08);
-    border: 1px solid rgba(255,45,45,0.3);
-    position: relative;
-  }
-  .price-card.featured::before {
-    content: 'POPULAR';
-    position: absolute;
-    top: -10px; left: 50%;
-    transform: translateX(-50%);
-    background: var(--raptor-red);
-    font-family: var(--font-ui);
-    font-size: 0.55rem;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    padding: 0.2rem 0.8rem;
-    clip-path: polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%);
-  }
-  .price-tier {
-    font-family: var(--font-ui);
-    font-size: 0.65rem;
-    font-weight: 600;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--raptor-muted);
-    margin-bottom: 0.6rem;
-  }
-  .price-amount {
-    font-family: var(--font-display);
-    font-size: 2.2rem;
-    color: var(--raptor-white);
-    letter-spacing: 0.02em;
-  }
-  .price-amount small {
-    font-family: var(--font-ui);
-    font-size: 0.7rem;
-    color: var(--raptor-muted);
-    letter-spacing: 0.1em;
-    display: block;
-    margin-top: 0.2rem;
-  }
+  .price-card.highlight { background: var(--orange); }
+  .price-label { font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; opacity: 0.7; }
+  .price-amount { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 2px; margin: 0.3rem 0; }
+  .price-note { font-size: 0.75rem; opacity: 0.6; }
+  .price-card.highlight .price-label,
+  .price-card.highlight .price-note { opacity: 0.9; }
 
-  /* CULTURE SECTION */
-  .culture-section { background: var(--raptor-black); }
-
-  .culture-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 5rem;
-    align-items: center;
+  /* ── GALLERY ── */
+  #gallery { background: var(--black); }
+  .gallery-masonry {
+    columns: 3; column-gap: 1px;
   }
-
-  .culture-visual {
-    position: relative;
-  }
-  .culture-img-main {
-    width: 100%;
-    aspect-ratio: 4/5;
-    object-fit: cover;
-    filter: saturate(0.85) contrast(1.1);
-  }
-  .culture-img-accent {
-    position: absolute;
-    bottom: -2rem;
-    right: -2rem;
-    width: 55%;
-    aspect-ratio: 1;
-    object-fit: cover;
-    border: 4px solid var(--raptor-black);
-    filter: saturate(0.85);
-  }
-  .culture-stat-pill {
-    position: absolute;
-    top: 2rem;
-    left: -1.5rem;
-    background: var(--raptor-red);
-    padding: 1rem 1.5rem;
-    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
-  }
-  .culture-stat-pill .num {
-    font-family: var(--font-display);
-    font-size: 2.2rem;
-    display: block;
-    line-height: 1;
-  }
-  .culture-stat-pill .lbl {
-    font-family: var(--font-ui);
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    opacity: 0.8;
-  }
-
-  .culture-text .section-title { margin-bottom: 1.5rem; }
-
-  .culture-body {
-    font-size: 1.05rem;
-    font-weight: 300;
-    color: var(--raptor-muted);
-    line-height: 1.85;
-    margin-bottom: 2rem;
-  }
-
-  .culture-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.6rem;
-    margin-bottom: 2.5rem;
-  }
-  .culture-tag {
-    font-family: var(--font-ui);
-    font-size: 0.68rem;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    padding: 0.4rem 1rem;
-    border: 1px solid rgba(255,45,45,0.3);
-    color: var(--raptor-red);
-    transition: all 0.2s;
-  }
-  .culture-tag:hover {
-    background: rgba(255,45,45,0.12);
-    border-color: var(--raptor-red);
-  }
-
-  /* GALLERY */
-  .gallery-section { background: var(--raptor-deep); }
-
-  .gallery-scroll {
-    display: flex;
-    gap: 1.5px;
-    overflow-x: auto;
-    margin: 0 -3rem;
-    padding: 0 3rem;
-    scrollbar-width: none;
-  }
-  .gallery-scroll::-webkit-scrollbar { display: none; }
-
+  @media (max-width: 768px) { .gallery-masonry { columns: 2; } }
   .gallery-item {
-    flex-shrink: 0;
-    width: 300px;
-    height: 400px;
-    overflow: hidden;
-    position: relative;
-    cursor: none;
+    break-inside: avoid; margin-bottom: 1px; position: relative; overflow: hidden;
+    cursor: pointer; display: block;
   }
   .gallery-item img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s, filter 0.3s;
-    filter: saturate(0.75) contrast(1.1);
+    width: 100%; display: block;
+    transition: transform 0.5s ease, filter 0.3s;
+    filter: saturate(0.8);
   }
-  .gallery-item:hover img {
-    transform: scale(1.08);
-    filter: saturate(1.2) contrast(1.1);
-  }
-  .gallery-item-label {
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    padding: 1.5rem 1.2rem 1.2rem;
+  .gallery-item:hover img { transform: scale(1.04); filter: saturate(1.2); }
+  .gallery-label {
+    position: absolute; bottom: 0; left: 0; right: 0;
     background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-    font-family: var(--font-display);
-    font-size: 1.3rem;
-    letter-spacing: 0.06em;
-    opacity: 0;
-    transition: opacity 0.3s;
+    padding: 1.5rem 1rem 0.8rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.9rem; letter-spacing: 2px;
+    opacity: 0; transition: opacity 0.3s;
   }
-  .gallery-item:hover .gallery-item-label { opacity: 1; }
+  .gallery-item:hover .gallery-label { opacity: 1; }
 
-  /* TESTIMONIALS */
-  .testimonials-section { background: var(--raptor-black); }
-
-  .testimonials-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5px;
-    background: var(--raptor-border);
-    margin-top: 3rem;
+  /* ── CULTURE ── */
+  #culture {
+    background: linear-gradient(180deg, var(--mid) 0%, var(--black) 100%);
   }
-  .testimonial {
-    background: var(--raptor-card);
-    padding: 2rem;
-    position: relative;
+  .culture-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+  @media (max-width: 900px) { .culture-inner { grid-template-columns: 1fr; gap: 3rem; } }
+  .culture-text p { font-size: 1rem; line-height: 1.9; opacity: 0.8; margin-bottom: 1.5rem; }
+  .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 2rem; }
+  .tag {
+    border: 1px solid rgba(255,92,0,0.4); color: var(--orange);
+    padding: 0.3rem 0.8rem; font-size: 0.75rem; letter-spacing: 1px;
+    border-radius: 20px;
   }
-  .testimonial::before {
-    content: '"';
-    font-family: var(--font-display);
-    font-size: 6rem;
-    color: rgba(255,45,45,0.15);
-    position: absolute;
-    top: 0.5rem; right: 1.5rem;
-    line-height: 1;
-    pointer-events: none;
+  .culture-image {
+    position: relative; border-radius: 4px; overflow: hidden;
+    aspect-ratio: 4/5;
   }
-  .test-text {
-    font-size: 0.95rem;
-    font-weight: 300;
-    color: var(--raptor-muted);
-    line-height: 1.7;
-    margin-bottom: 1.5rem;
-    font-style: italic;
-  }
-  .test-author {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-  }
-  .test-avatar {
-    width: 40px; height: 40px;
-    border-radius: 50%;
-    background: var(--raptor-red);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--font-ui);
-    font-size: 0.8rem;
-    font-weight: 700;
-    flex-shrink: 0;
-  }
-  .test-name {
-    font-family: var(--font-ui);
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--raptor-white);
-  }
-  .test-role {
-    font-size: 0.72rem;
-    color: var(--raptor-muted);
-    letter-spacing: 0.04em;
+  .culture-image img { width: 100%; height: 100%; object-fit: cover; }
+  .culture-image::before {
+    content: ''; position: absolute; inset: -1px;
+    border: 2px solid var(--orange); z-index: 2; pointer-events: none;
+    opacity: 0.3;
   }
 
-  /* SOCIAL SECTION */
-  .social-section { background: var(--raptor-deep); }
+  /* ── TESTIMONIALS ── */
+  #testimonials { background: var(--dark); }
+  .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+  .testi-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    padding: 2rem; border-radius: 4px;
+    transition: border-color 0.3s;
+  }
+  .testi-card:hover { border-color: rgba(255,92,0,0.3); }
+  .testi-stars { color: var(--gold); font-size: 1rem; margin-bottom: 1rem; }
+  .testi-text { font-size: 0.92rem; line-height: 1.8; opacity: 0.8; margin-bottom: 1.5rem; }
+  .testi-author { display: flex; align-items: center; gap: 0.8rem; }
+  .testi-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--orange); display: flex; align-items: center;
+    justify-content: center; font-weight: 700; font-size: 0.9rem;
+  }
+  .testi-name { font-weight: 600; font-size: 0.85rem; }
+  .testi-role { font-size: 0.75rem; opacity: 0.5; }
 
-  .social-cta-wrap {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-    margin-top: 2.5rem;
+  /* ── SOCIALS ── */
+  #socials { background: var(--orange); }
+  #socials .section-label { color: rgba(0,0,0,0.5); }
+  #socials .section-title { color: #000; }
+  .social-links { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 2rem; }
+  .social-link {
+    display: flex; align-items: center; gap: 0.7rem;
+    background: rgba(0,0,0,0.15); color: #000;
+    padding: 0.9rem 1.8rem; text-decoration: none;
+    font-weight: 700; font-size: 0.9rem; border-radius: 2px;
+    transition: background 0.2s;
   }
-  .social-card {
-    border: 1px solid var(--raptor-border);
-    padding: 2.5rem;
-    background: var(--raptor-card);
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    transition: all 0.25s;
-    text-decoration: none;
-    color: inherit;
-    cursor: none;
-    position: relative;
-    overflow: hidden;
-  }
-  .social-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 3px; height: 0;
-    background: var(--raptor-red);
-    transition: height 0.3s;
-  }
-  .social-card:hover { border-color: rgba(255,45,45,0.3); }
-  .social-card:hover::before { height: 100%; }
-  .social-icon {
-    font-size: 2.5rem;
-    flex-shrink: 0;
-  }
-  .social-platform {
-    font-family: var(--font-display);
-    font-size: 1.8rem;
-    letter-spacing: 0.04em;
-    display: block;
-    margin-bottom: 0.2rem;
-  }
-  .social-handle {
-    font-size: 0.8rem;
-    color: var(--raptor-muted);
-    font-family: var(--font-ui);
-  }
+  .social-link:hover { background: rgba(0,0,0,0.3); }
 
-  /* FOOTER */
+  /* ── CONTACT ── */
+  #contact { background: var(--black); }
+  .contact-inner {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start;
+  }
+  @media (max-width: 900px) { .contact-inner { grid-template-columns: 1fr; gap: 3rem; } }
+  .contact-detail { margin-bottom: 2rem; }
+  .contact-detail-label {
+    font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--orange); margin-bottom: 0.5rem;
+  }
+  .contact-detail-value { font-size: 1.3rem; font-weight: 600; }
+  .contact-detail-value a { color: var(--white); text-decoration: none; }
+  .contact-detail-value a:hover { color: var(--orange); }
+  .contact-map {
+    background: rgba(255,92,0,0.05);
+    border: 1px solid rgba(255,92,0,0.2);
+    border-radius: 4px; overflow: hidden; aspect-ratio: 16/9;
+  }
+  .contact-map iframe { width: 100%; height: 100%; border: none; filter: grayscale(0.5) invert(0.1); }
+
+  /* ── FOOTER ── */
   footer {
-    background: var(--raptor-deep);
-    border-top: 1px solid var(--raptor-border);
-  }
-  .footer-inner {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 4rem 3rem 2rem;
-  }
-  .footer-grid {
+    background: var(--dark);
+    border-top: 1px solid rgba(255,92,0,0.2);
+    padding: 3rem 4rem;
     display: grid;
     grid-template-columns: 2fr 1fr 1fr 1fr;
     gap: 3rem;
-    margin-bottom: 3rem;
   }
+  @media (max-width: 900px) { footer { grid-template-columns: 1fr 1fr; gap: 2rem; padding: 2rem; } }
+  @media (max-width: 500px) { footer { grid-template-columns: 1fr; } }
   .footer-brand-name {
-    font-family: var(--font-display);
-    font-size: 2.5rem;
-    letter-spacing: 0.1em;
-    margin-bottom: 1rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem; letter-spacing: 4px; color: var(--orange);
+    margin-bottom: 0.8rem;
   }
-  .footer-brand-name span { color: var(--raptor-red); }
-  .footer-tagline {
-    font-size: 0.85rem;
-    color: var(--raptor-muted);
-    line-height: 1.7;
-    max-width: 280px;
-    margin-bottom: 1.5rem;
+  .footer-tagline { font-size: 0.85rem; opacity: 0.5; line-height: 1.7; }
+  .footer-col h4 {
+    font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--orange); margin-bottom: 1rem;
   }
-  .footer-heading {
-    font-family: var(--font-ui);
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    color: var(--raptor-red);
-    margin-bottom: 1.2rem;
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 0.6rem; }
+  .footer-col ul a {
+    color: var(--white); text-decoration: none;
+    font-size: 0.85rem; opacity: 0.6;
+    transition: opacity 0.2s;
   }
-  .footer-links { list-style: none; }
-  .footer-links li { margin-bottom: 0.6rem; }
-  .footer-links a {
-    font-size: 0.88rem;
-    color: var(--raptor-muted);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-  .footer-links a:hover { color: var(--raptor-white); }
+  .footer-col ul a:hover { opacity: 1; color: var(--orange); }
   .footer-bottom {
-    border-top: 1px solid var(--raptor-border);
-    padding-top: 1.5rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    background: var(--black); padding: 1.5rem 4rem;
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    font-size: 0.78rem; opacity: 0.4;
   }
-  .footer-copy {
-    font-size: 0.75rem;
-    color: var(--raptor-muted);
-    font-family: var(--font-ui);
-  }
-  .footer-made {
-    font-size: 0.75rem;
-    color: var(--raptor-muted);
-    font-family: var(--font-ui);
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
-  }
+  @media (max-width: 600px) { .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; padding: 1rem 2rem; } }
 
-  /* ANIMATIONS */
+  /* Animations */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(30px); }
     to { opacity: 1; transform: translateY(0); }
   }
-  .fade-up { animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
-  .delay-1 { animation-delay: 0.1s; }
-  .delay-2 { animation-delay: 0.22s; }
-  .delay-3 { animation-delay: 0.38s; }
-  .delay-4 { animation-delay: 0.52s; }
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
 
-  /* MOBILE */
+  /* Responsive nav */
   @media (max-width: 900px) {
     nav { padding: 1rem 1.5rem; }
     .nav-links { display: none; }
-    .section-inner { padding: 4rem 1.5rem; }
-    .hero-title { font-size: 5rem; }
-    .fleet-grid { grid-template-columns: 1fr; }
-    .fleet-card:first-child { grid-column: span 1; aspect-ratio: 16/9; }
-    .booking-grid { grid-template-columns: 1fr; gap: 3rem; }
-    .culture-grid { grid-template-columns: 1fr; gap: 3rem; }
-    .stats-grid { grid-template-columns: repeat(2, 1fr); }
-    .testimonials-grid { grid-template-columns: 1fr; }
-    .social-cta-wrap { grid-template-columns: 1fr; }
-    .footer-grid { grid-template-columns: 1fr 1fr; }
-    .footer-brand { grid-column: span 2; }
-    .form-row { grid-template-columns: 1fr; }
-    .price-cards { grid-template-columns: 1fr; }
+    section { padding: 4rem 1.5rem; }
+    .stats-bar { padding: 1rem 1.5rem; gap: 2rem; }
   }
+
+  /* Scroll reveal */
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
 </style>
 </head>
 <body>
 
-<!-- CURSOR -->
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
-
 <!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo">RAPTOR<span>FAM</span></a>
+  <a href="index.html" class="nav-logo">RAPTORFAM</a>
   <ul class="nav-links">
     <li><a href="#fleet">Fleet</a></li>
     <li><a href="#book">Book a Ride</a></li>
@@ -1135,186 +456,149 @@
 </nav>
 
 <!-- HERO -->
-<section class="hero">
-  <div class="hero-bg"></div>
-
-  <div class="hero-img-grid">
-    <!-- Using high-quality Unsplash images of colorful buses/urban Nairobi -->
-    <div class="hero-img-grid-cell"><img src="https://images.unsplash.com/photo-1547626387-71e5fe1c2048?w=600&q=80" alt=""></div>
-    <div class="hero-img-grid-cell"><img src="https://images.unsplash.com/photo-1520285501-2ca33e4f7e97?w=600&q=80" alt=""></div>
-    <div class="hero-img-grid-cell"><img src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=600&q=80" alt=""></div>
-    <div class="hero-img-grid-cell"><img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=600&q=80" alt=""></div>
-    <div class="hero-img-grid-cell"><img src="https://images.unsplash.com/photo-1570125909232-eb263c188f7e?w=600&q=80" alt=""></div>
-    <div class="hero-img-grid-cell"><img src="https://images.unsplash.com/photo-1614680376573-df3480f0c6ff?w=600&q=80" alt=""></div>
-    <div class="hero-img-grid-cell"><img src="https://images.unsplash.com/photo-1543465077-db45d34b88a5?w=600&q=80" alt=""></div>
-    <div class="hero-img-grid-cell"><img src="https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?w=600&q=80" alt=""></div>
-    <div class="hero-img-grid-cell"><img src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?w=600&q=80" alt=""></div>
-    <div class="hero-img-grid-cell"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt=""></div>
-    <div class="hero-img-grid-cell"><img src="https://images.unsplash.com/photo-1597404294360-feeeda04612e?w=600&q=80" alt=""></div>
-    <div class="hero-img-grid-cell"><img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600&q=80" alt=""></div>
+<section class="hero" id="hero">
+  <div class="hero-slides">
+    <div class="hero-slide active" style="background-image: url('https://cdn.tuko.co.ke/images/1200x675/d561d67a16870189.jpeg?v=1')"></div>
+    <div class="hero-slide" style="background-image: url('https://cdn.tuko.co.ke/images/1200x675/1381611c866493fa.jpeg?v=1')"></div>
+    <div class="hero-slide" style="background-image: url('https://cdn.tuko.co.ke/images/1200x675/1166019093a00952.jpeg?v=1')"></div>
+    <div class="hero-slide" style="background-image: url('https://cdn.tuko.co.ke/images/1200x675/26b9da2442fd2c9e.jpeg?v=1')"></div>
+    <div class="hero-slide" style="background-image: url('https://cdn.tuko.co.ke/images/1200x675/2a1e36efef4914f3.jpeg?v=1')"></div>
+    <div class="hero-slide" style="background-image: url('https://cdn.tuko.co.ke/images/1200x675/42bea0778bcc24f8.jpeg?v=1')"></div>
   </div>
-  <div class="hero-grid-overlay"></div>
-
   <div class="hero-content">
-    <div class="hero-eyebrow fade-up">Nairobi's Legendary Nganya Family</div>
-    <h1 class="hero-title fade-up delay-1">
-      RAPTOR<br><span class="outline">FAM</span><br><span class="accent">KE</span>
-    </h1>
-    <p class="hero-subtitle fade-up delay-2">
-      Where art meets transport. Music meets movement.<br>Every ride tells a story.
-    </p>
-    <div class="hero-actions fade-up delay-3">
+    <p class="hero-eyebrow">Nairobi's Legendary Nganya Family</p>
+    <h1 class="hero-title">RAPTOR<br><span>FAM</span><br>KE</h1>
+    <p class="hero-sub">Where art meets transport. Music meets movement.<br>Every ride tells a story.</p>
+    <div class="hero-btns">
       <a href="#book" class="btn-primary">Book Your Nganya</a>
-      <a href="#fleet" class="btn-ghost">View the Fleet</a>
+      <a href="#fleet" class="btn-outline">View the Fleet</a>
     </div>
-  </div>
-
-  <div class="hero-scroll">
-    <div class="hero-scroll-line"></div>
-    <span>Scroll</span>
   </div>
 </section>
 
-<!-- TICKER -->
-<div class="ticker-wrap">
-  <div class="ticker-track">
-    <div class="ticker-item">MOOD <span></span></div>
-    <div class="ticker-item">MONEYFEST <span></span></div>
-    <div class="ticker-item">MATRIX <span></span></div>
-    <div class="ticker-item">BABA YAGA <span></span></div>
-    <div class="ticker-item">RAPTOR <span></span></div>
-    <div class="ticker-item">NAIROBI STREET CULTURE <span></span></div>
-    <div class="ticker-item">BOOK THE NGANYA <span></span></div>
-    <div class="ticker-item">MOVE DIFFERENT <span></span></div>
-    <div class="ticker-item">MOOD <span></span></div>
-    <div class="ticker-item">MONEYFEST <span></span></div>
-    <div class="ticker-item">MATRIX <span></span></div>
-    <div class="ticker-item">BABA YAGA <span></span></div>
-    <div class="ticker-item">RAPTOR <span></span></div>
-    <div class="ticker-item">NAIROBI STREET CULTURE <span></span></div>
-    <div class="ticker-item">BOOK THE NGANYA <span></span></div>
-    <div class="ticker-item">MOVE DIFFERENT <span></span></div>
-  </div>
-</div>
-
 <!-- STATS -->
 <div class="stats-bar">
-  <div class="stats-grid">
-    <div class="stat-item">
-      <span class="stat-number">5+</span>
-      <span class="stat-label">Iconic Nganyas</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-number">100K+</span>
-      <span class="stat-label">Community Members</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-number">10+</span>
-      <span class="stat-label">Years in Culture</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-number">🌍</span>
-      <span class="stat-label">Africa-Wide Recognition</span>
-    </div>
+  <div class="stat"><div class="stat-num">6+</div><div class="stat-label">Iconic Nganyas</div></div>
+  <div class="stat"><div class="stat-num">41K+</div><div class="stat-label">IG Followers</div></div>
+  <div class="stat"><div class="stat-num">KSh 14M</div><div class="stat-label">Mood Build Cost</div></div>
+  <div class="stat"><div class="stat-num">🌍</div><div class="stat-label">Africa-Wide Recognition</div></div>
+</div>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span>MOOD</span> ✦ <span>MONEYFEST</span> ✦ <span>MATRIX</span> ✦ <span>BABA YAGA</span> ✦ <span>RAPTOR</span> ✦ <span>NAIROBI STREET CULTURE</span> ✦ <span>BOOK THE NGANYA</span> ✦ <span>MOVE DIFFERENT</span> ✦
+    <span>MOOD</span> ✦ <span>MONEYFEST</span> ✦ <span>MATRIX</span> ✦ <span>BABA YAGA</span> ✦ <span>RAPTOR</span> ✦ <span>NAIROBI STREET CULTURE</span> ✦ <span>BOOK THE NGANYA</span> ✦ <span>MOVE DIFFERENT</span> ✦
   </div>
 </div>
 
 <!-- FLEET -->
-<section class="fleet-section" id="fleet">
-  <div class="section-inner">
-    <div class="fleet-header">
-      <div>
-        <div class="section-label">The Fleet</div>
-        <h2 class="section-title">MOVING<br><span style="color: var(--raptor-muted); -webkit-text-stroke: 1px rgba(245,240,232,0.2); color: transparent;">WORKS</span><br>OF ART</h2>
-      </div>
-      <a href="#book" class="btn-primary">Book Any Car</a>
-    </div>
+<section id="fleet">
+  <p class="section-label reveal">The Fleet</p>
+  <h2 class="section-title reveal">MOVING <em>WORKS</em><br>OF ART</h2>
+  <p class="section-intro reveal">Tap any nganya to open its full page — story, specs, features and a gallery up close.</p>
 
-    <div class="fleet-grid">
-      <!-- MOOD - hero card -->
-      <div class="fleet-card">
-        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=85" alt="Mood Matatu">
-        <div class="fleet-card-overlay">
-          <div class="fleet-tag">Flagship Nganya</div>
-          <div class="fleet-name">MOOD</div>
-          <div class="fleet-desc">The crown jewel. Custom murals, DJ booth, LED interiors & premium sound system.</div>
-        </div>
-        <div class="fleet-badge">Available</div>
+  <div class="fleet-grid">
+    <!-- MOOD — Featured -->
+    <a href="mood.html" class="fleet-card featured">
+      <img src="https://cdn.tuko.co.ke/images/1200x675/1381611c866493fa.jpeg?v=1" alt="Mood Matatu" loading="lazy">
+      <div class="fleet-card-overlay">
+        <span class="fleet-badge">Flagship Nganya ★</span>
+        <div class="fleet-name">MOOD</div>
+        <div class="fleet-desc">Kenya's first solar-powered matatu. DJ booth, 65-inch TVs, KSh 2M sound system, 26 bucket seats & full LED interiors. Unveiled at KICC July 2025.</div>
+        <div class="fleet-explore">Open Mood →</div>
       </div>
+    </a>
 
-      <!-- MONEYFEST -->
-      <div class="fleet-card">
-        <img src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?w=800&q=85" alt="MoneyFest Matatu">
-        <div class="fleet-card-overlay">
-          <div class="fleet-tag">Premium Ride</div>
-          <div class="fleet-name">MONEY<br>FEST</div>
-          <div class="fleet-desc">Luxury interior. Statement graffiti. Born to make moves.</div>
-        </div>
+    <!-- MONEYFEST -->
+    <a href="moneyfest.html" class="fleet-card">
+      <img src="https://cdn.tuko.co.ke/images/1200x675/26b9da2442fd2c9e.jpeg?v=1" alt="MoneyFest Matatu" loading="lazy">
+      <div class="fleet-card-overlay">
+        <span class="fleet-badge">Premium Ride</span>
+        <div class="fleet-name">MONEY FEST</div>
+        <div class="fleet-desc">KSh 20M build. Statement graffiti, statement presence. Born to make moves on Embakasi.</div>
+        <div class="fleet-explore">Open MoneyFest →</div>
       </div>
+    </a>
 
-      <!-- MATRIX -->
-      <div class="fleet-card">
-        <img src="https://images.unsplash.com/photo-1570125909517-53cb21c89ff2?w=800&q=85" alt="Matrix Matatu">
-        <div class="fleet-card-overlay">
-          <div class="fleet-tag">Fan Favorite</div>
-          <div class="fleet-name">MATRIX</div>
-          <div class="fleet-desc">Tech-inspired build. Digital screens & futuristic lighting.</div>
-        </div>
-        <div class="fleet-badge" style="background: var(--raptor-orange);">Hot Pick</div>
+    <!-- MATRIX -->
+    <a href="matrix.html" class="fleet-card">
+      <img src="https://cdn.tuko.co.ke/images/1200x675/1166019093a00952.jpeg?v=1" alt="Matrix Matatu" loading="lazy">
+      <div class="fleet-card-overlay">
+        <span class="fleet-badge">Fan Favorite</span>
+        <div class="fleet-name">MATRIX</div>
+        <div class="fleet-desc">Inspired by the Keanu Reeves blockbuster. Digital screens, futuristic lighting, KSh 8.7M build. Embakasi's finest.</div>
+        <div class="fleet-explore">Open Matrix →</div>
       </div>
+    </a>
 
-      <!-- BABA YAGA -->
-      <div class="fleet-card">
-        <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=800&q=85" alt="Baba Yaga Matatu">
-        <div class="fleet-card-overlay">
-          <div class="fleet-tag">Iconic Build</div>
-          <div class="fleet-name">BABA<br>YAGA</div>
-          <div class="fleet-desc">Fierce design. Unforgettable road presence.</div>
-        </div>
+    <!-- BABA YAGA -->
+    <a href="babayaga.html" class="fleet-card">
+      <img src="https://cdn.tuko.co.ke/images/1200x675/2a1e36efef4914f3.jpeg?v=1" alt="Baba Yaga Matatu" loading="lazy">
+      <div class="fleet-card-overlay">
+        <span class="fleet-badge">Crew of the Year 🏆</span>
+        <div class="fleet-name">BABA YAGA</div>
+        <div class="fleet-desc">Ongata Rongai's most fierce matatu. Won Crew of the Year at Nganya Awards 2025. Unforgettable road presence.</div>
+        <div class="fleet-explore">Open Baba Yaga →</div>
       </div>
+    </a>
 
-      <!-- RAPTOR -->
-      <div class="fleet-card">
-        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=85" alt="Raptor Matatu" style="filter: hue-rotate(180deg) saturate(0.7)">
-        <div class="fleet-card-overlay">
-          <div class="fleet-tag">The OG</div>
-          <div class="fleet-name">RAPTOR</div>
-          <div class="fleet-desc">Where it all started. The legend. The namesake.</div>
-        </div>
+    <!-- RAPTOR -->
+    <a href="raptor.html" class="fleet-card">
+      <img src="https://cdn.tuko.co.ke/images/1200x675/8f89fab43ca445cc.jpeg?v=1" alt="Raptor Matatu" loading="lazy">
+      <div class="fleet-card-overlay">
+        <span class="fleet-badge">The OG — Back on Roads</span>
+        <div class="fleet-name">RAPTOR</div>
+        <div class="fleet-desc">Where it all started. Named after the F-22 Raptor fighter jet. Fully revamped & back on roads 2026. The legend, the namesake.</div>
+        <div class="fleet-explore">Open Raptor →</div>
       </div>
-    </div>
+    </a>
+
+    <!-- MOOD CLOSEUP -->
+    <a href="mood.html" class="fleet-card">
+      <img src="https://cdn.tuko.co.ke/images/1200x675/42bea0778bcc24f8.jpeg?v=1" alt="Mood close up" loading="lazy">
+      <div class="fleet-card-overlay">
+        <span class="fleet-badge">Solar PSV ☀️</span>
+        <div class="fleet-name">MOOD · CLOSE UP</div>
+        <div class="fleet-desc">Roof-mounted solar panels, custom number plate, push-to-start. The detail that broke the internet.</div>
+        <div class="fleet-explore">Open Mood →</div>
+      </div>
+    </a>
+  </div>
+
+  <div style="text-align:center; margin-top: 3rem;">
+    <a href="#book" class="btn-primary">Book Any Car</a>
   </div>
 </section>
 
-<!-- BOOKING -->
-<section class="booking-section" id="book">
-  <div class="section-inner">
-    <div class="section-label">Book a Ride</div>
-    <div class="booking-grid">
+<!-- BOOK -->
+<section id="book">
+  <div class="book-inner">
+    <div>
+      <p class="section-label reveal">Book a Ride</p>
+      <h2 class="section-title reveal">RESERVE YOUR<br><em>NGANYA</em></h2>
+      <p style="opacity:0.7; margin-bottom:2rem; line-height:1.8;">Fill in below — we'll confirm within 2 hours. No cap.<br>
+      Or call/WhatsApp us directly: <a href="tel:+254721200200" style="color:var(--orange); font-weight:700;">+254 721 200 200</a></p>
 
-      <div class="booking-form">
-        <h2 class="form-title">RESERVE YOUR<br>NGANYA</h2>
-        <p class="form-subtitle">Fill in below — we'll confirm within 2 hours. No cap.</p>
-
+      <div class="book-form">
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label">Full Name</label>
-            <input type="text" class="form-input" placeholder="Njoroge Kamau">
+            <label>Full Name</label>
+            <input type="text" id="bk-name" placeholder="Your full name">
           </div>
           <div class="form-group">
-            <label class="form-label">Phone / WhatsApp</label>
-            <input type="tel" class="form-input" placeholder="+254 7XX XXX XXX">
+            <label>Phone / WhatsApp</label>
+            <input type="tel" id="bk-phone" placeholder="+254 7XX XXX XXX">
           </div>
         </div>
-
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label">Event Date</label>
-            <input type="date" class="form-input">
+            <label>Event Date</label>
+            <input type="date" id="bk-date">
           </div>
           <div class="form-group">
-            <label class="form-label">Event Type</label>
-            <select class="form-select">
+            <label>Event Type</label>
+            <select id="bk-event">
               <option value="">Select type</option>
               <option>Birthday Party</option>
               <option>Corporate Event</option>
@@ -1326,384 +610,367 @@
             </select>
           </div>
         </div>
-
         <div class="form-group">
-          <label class="form-label">Pickup Location</label>
-          <input type="text" class="form-input" placeholder="E.g. Westgate Mall, Nairobi">
+          <label>Pickup Location</label>
+          <input type="text" id="bk-pickup" placeholder="Where should we pick you up?">
         </div>
-
         <div class="form-group">
-          <label class="form-label">Choose Your Nganya</label>
-          <div class="form-cars">
-            <div class="car-option">
-              <input type="radio" name="car" id="mood" value="mood">
-              <label for="mood"><span class="car-dot"></span>Mood</label>
-            </div>
-            <div class="car-option">
-              <input type="radio" name="car" id="moneyfest" value="moneyfest">
-              <label for="moneyfest"><span class="car-dot"></span>MoneyFest</label>
-            </div>
-            <div class="car-option">
-              <input type="radio" name="car" id="matrix" value="matrix">
-              <label for="matrix"><span class="car-dot"></span>Matrix</label>
-            </div>
-            <div class="car-option">
-              <input type="radio" name="car" id="babayaga" value="babayaga">
-              <label for="babayaga"><span class="car-dot"></span>Baba Yaga</label>
-            </div>
-            <div class="car-option">
-              <input type="radio" name="car" id="raptor" value="raptor">
-              <label for="raptor"><span class="car-dot"></span>Raptor</label>
-            </div>
-            <div class="car-option">
-              <input type="radio" name="car" id="surprise" value="surprise">
-              <label for="surprise"><span class="car-dot"></span>Surprise Me</label>
-            </div>
-          </div>
+          <label>Choose Your Nganya</label>
+          <select id="bk-nganya">
+            <option value="">Select a matatu</option>
+            <option>Mood</option>
+            <option>MoneyFest</option>
+            <option>Matrix</option>
+            <option>Baba Yaga</option>
+            <option>Raptor</option>
+            <option>Surprise Me</option>
+          </select>
         </div>
-
         <div class="form-group">
-          <label class="form-label">Additional Details</label>
-          <textarea class="form-textarea" placeholder="Number of guests, special requirements, custom sound, DJ..."></textarea>
+          <label>Additional Details</label>
+          <textarea id="bk-notes" placeholder="Tell us more about your event..."></textarea>
         </div>
-
-        <button class="form-submit" type="submit">Submit Booking Request →</button>
-      </div>
-
-      <div class="booking-info">
-        <div class="section-label">Why RaptorFam</div>
-        <h2 class="info-title">THE<br>EXPERIENCE<br><span class="dim">IS</span><br><span style="color: var(--raptor-red);">EVERYTHING</span></h2>
-        <p class="info-text">These aren't just matatus. They're moving theatres, cultural statements, and memories you'll be talking about for years. Book one for your next event and live the nganya experience properly.</p>
-
-        <div class="info-features">
-          <div class="info-feat">
-            <div class="feat-icon">🎵</div>
-            <div>
-              <div class="feat-title">Pro Sound System</div>
-              <div class="feat-desc">High-performance audio setups with DJ booths. The whole block will hear you coming.</div>
-            </div>
-          </div>
-          <div class="info-feat">
-            <div class="feat-icon">🎨</div>
-            <div>
-              <div class="feat-title">Custom Graffiti Art</div>
-              <div class="feat-desc">Murals by Kenya's best street artists. Every panel tells a story.</div>
-            </div>
-          </div>
-          <div class="info-feat">
-            <div class="feat-icon">💡</div>
-            <div>
-              <div class="feat-title">LED & Screen Setup</div>
-              <div class="feat-desc">Interior LED displays, TV screens, and ambient lighting for max vibes.</div>
-            </div>
-          </div>
-          <div class="info-feat">
-            <div class="feat-icon">🛋️</div>
-            <div>
-              <div class="feat-title">Premium Seating</div>
-              <div class="feat-desc">Plush interiors built for comfort and style. Not your average matatu.</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="price-cards">
-          <div class="price-card">
-            <div class="price-tier">Half Day</div>
-            <div class="price-amount">
-              KSh 15K
-              <small>Up to 4hrs</small>
-            </div>
-          </div>
-          <div class="price-card featured">
-            <div class="price-tier">Full Day</div>
-            <div class="price-amount">
-              KSh 25K
-              <small>Up to 8hrs</small>
-            </div>
-          </div>
-          <div class="price-card">
-            <div class="price-tier">Weekend</div>
-            <div class="price-amount">
-              KSh 45K
-              <small>Sat – Sun</small>
-            </div>
-          </div>
-        </div>
+        <button class="submit-btn" onclick="submitBooking()">
+          Submit Booking Request →
+        </button>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- CULTURE -->
-<section class="culture-section" id="culture">
-  <div class="section-inner">
-    <div class="culture-grid">
-      <div class="culture-visual">
-        <img class="culture-img-main"
-          src="https://images.unsplash.com/photo-1540420828642-fca2c5c18abe?w=700&q=85"
-          alt="Nairobi street art culture">
-        <img class="culture-img-accent"
-          src="https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?w=500&q=80"
-          alt="Matatu interior">
-        <div class="culture-stat-pill">
-          <span class="num">20+</span>
-          <span class="lbl">Years of Culture</span>
+    <div class="book-side">
+      <p class="section-label reveal">Why RaptorFam</p>
+      <h3 class="section-title reveal" style="font-size: 2rem;">THE <em>EXPERIENCE</em><br>IS EVERYTHING</h3>
+
+      <ul class="book-features">
+        <li class="book-feature">
+          <span class="feature-icon">🎵</span>
+          <div class="feature-text">
+            <strong>Pro Sound System</strong>
+            KSh 2M+ Apocalypse speaker setups with live DJ booths. Subwoofers under every seat. The whole block will hear you coming.
+          </div>
+        </li>
+        <li class="book-feature">
+          <span class="feature-icon">🎨</span>
+          <div class="feature-text">
+            <strong>Custom Graffiti Art</strong>
+            Murals by Kenya's top street artists. Every panel tells a story. Featured across Africa.
+          </div>
+        </li>
+        <li class="book-feature">
+          <span class="feature-icon">💡</span>
+          <div class="feature-text">
+            <strong>LED & 65-inch Screens</strong>
+            Interior LED displays, multiple 65-inch TV screens, and ambient party lighting.
+          </div>
+        </li>
+        <li class="book-feature">
+          <span class="feature-icon">🛋️</span>
+          <div class="feature-text">
+            <strong>Bucket Racing Seats</strong>
+            KSh 60K+ premium bucket seats per unit. USB ports, cup holders, full AC. Pure luxury.
+          </div>
+        </li>
+        <li class="book-feature">
+          <span class="feature-icon">☀️</span>
+          <div class="feature-text">
+            <strong>Solar-Powered (Mood)</strong>
+            Kenya's only solar-powered PSV. Never runs out of power for screens & sound.
+          </div>
+        </li>
+      </ul>
+
+      <div class="pricing-grid">
+        <div class="price-card">
+          <div class="price-label">Half Day</div>
+          <div class="price-amount">15K</div>
+          <div class="price-note">Up to 4hrs</div>
+        </div>
+        <div class="price-card highlight">
+          <div class="price-label">Full Day</div>
+          <div class="price-amount">25K</div>
+          <div class="price-note">Up to 8hrs</div>
+        </div>
+        <div class="price-card">
+          <div class="price-label">Weekend</div>
+          <div class="price-amount">45K</div>
+          <div class="price-note">Sat – Sun</div>
         </div>
       </div>
 
-      <div class="culture-text">
-        <div class="section-label">The Movement</div>
-        <h2 class="section-title">MORE THAN<br>TRANSPORT.<br><span style="color: var(--raptor-red);">IT'S CULTURE.</span></h2>
-        <p class="culture-body">
-          RaptorFam KE is where Nairobi's streets come alive. We're not moving people — we're moving culture. From the graffiti murals to the DJ booths, from the LED strips to the premium interiors, every nganya in our fleet is a billboard for Kenya's most vibrant youth movement.
-        </p>
-        <p class="culture-body" style="margin-bottom: 1.5rem;">
-          Our fleet — Mood, MoneyFest, Matrix, Baba Yaga, and Raptor — are fan favorites recognized across Africa. Each one represents a generation of young creatives: painters, fabricators, DJs, sound engineers, and street culture enthusiasts who built something legendary.
-        </p>
-
-        <div class="culture-tags">
-          <span class="culture-tag">Graffiti Art</span>
-          <span class="culture-tag">Street Culture</span>
-          <span class="culture-tag">DJ Booths</span>
-          <span class="culture-tag">Custom Builds</span>
-          <span class="culture-tag">Nairobi</span>
-          <span class="culture-tag">Youth Movement</span>
-          <span class="culture-tag">Matatu Culture</span>
-          <span class="culture-tag">Nganya</span>
-        </div>
-
-        <a href="#book" class="btn-primary">Book the Experience</a>
-      </div>
+      <p style="font-size:0.8rem; opacity:0.5; margin-top:1rem;">All prices in KSh. Custom packages available. Call for Mood pricing.</p>
     </div>
   </div>
 </section>
 
 <!-- GALLERY -->
-<section class="gallery-section" id="gallery">
-  <div class="section-inner" style="padding-bottom: 2rem;">
-    <div class="section-label">Gallery</div>
-    <h2 class="section-title">THE RIDES.<br>UP CLOSE.</h2>
+<section id="gallery">
+  <p class="section-label reveal">Gallery</p>
+  <h2 class="section-title reveal">THE RIDES. <em>UP CLOSE.</em></h2>
+  <p class="section-intro reveal">Tap a photo to open that nganya's page.</p>
+
+  <div class="gallery-masonry">
+    <a href="mood.html" class="gallery-item">
+      <img src="https://cdn.tuko.co.ke/images/1200x675/d561d67a16870189.jpeg?v=1" alt="Mood matatu">
+      <div class="gallery-label">MOOD — NAIROBI CBD LAUNCH</div>
+    </a>
+    <a href="mood.html" class="gallery-item">
+      <img src="https://cdn.tuko.co.ke/images/1200x675/1381611c866493fa.jpeg?v=1" alt="Mood launch KICC">
+      <div class="gallery-label">MOOD — KICC UNVEILING</div>
+    </a>
+    <a href="moneyfest.html" class="gallery-item">
+      <img src="https://cdn.tuko.co.ke/images/1200x675/26b9da2442fd2c9e.jpeg?v=1" alt="MoneyFest">
+      <div class="gallery-label">MONEYFEST — EMBAKASI</div>
+    </a>
+    <a href="matrix.html" class="gallery-item">
+      <img src="https://cdn.tuko.co.ke/images/1200x675/1166019093a00952.jpeg?v=1" alt="Matrix">
+      <div class="gallery-label">MATRIX — THE BUILD</div>
+    </a>
+    <a href="babayaga.html" class="gallery-item">
+      <img src="https://cdn.tuko.co.ke/images/1200x675/2a1e36efef4914f3.jpeg?v=1" alt="Baba Yaga">
+      <div class="gallery-label">BABA YAGA — ONGATA RONGAI</div>
+    </a>
+    <a href="raptor.html" class="gallery-item">
+      <img src="https://cdn.tuko.co.ke/images/1200x675/8f89fab43ca445cc.jpeg?v=1" alt="Raptor">
+      <div class="gallery-label">RAPTOR — THE OG RETURNS</div>
+    </a>
+    <a href="mood.html" class="gallery-item">
+      <img src="https://cdn.tuko.co.ke/images/1200x675/42bea0778bcc24f8.jpeg?v=1" alt="Mood solar panels">
+      <div class="gallery-label">MOOD — SOLAR PANELS</div>
+    </a>
+    <a href="matrix.html" class="gallery-item">
+      <img src="https://cdn.tuko.co.ke/images/1200x675/1166019093a00952.jpeg?v=1" alt="Matrix detail">
+      <div class="gallery-label">MATRIX — NIGHT VIBES</div>
+    </a>
+    <a href="moneyfest.html" class="gallery-item">
+      <img src="https://cdn.tuko.co.ke/images/1200x675/26b9da2442fd2c9e.jpeg?v=1" alt="MoneyFest detail">
+      <div class="gallery-label">MONEYFEST — STREET RUN</div>
+    </a>
   </div>
-  <div class="gallery-scroll" style="padding-bottom: 3rem; margin-bottom: 0;">
-    <div class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=85" alt="Matatu art">
-      <div class="gallery-item-label">MOOD INTERIOR</div>
+</section>
+
+<!-- CULTURE -->
+<section id="culture">
+  <div class="culture-inner">
+    <div class="culture-text">
+      <p class="section-label reveal">The Movement</p>
+      <h2 class="section-title reveal">MORE THAN<br>TRANSPORT.<br><em>IT'S CULTURE.</em></h2>
+      <p>RaptorFam KE is where Nairobi's streets come alive. We're not moving people — we're moving culture. From the graffiti murals to the DJ booths, from the LED strips to the premium interiors, every nganya in our fleet is a billboard for Kenya's most vibrant youth movement.</p>
+      <p>Our fleet — Mood, MoneyFest, Matrix, Baba Yaga, and Raptor — are fan favorites recognized across Africa. Mood's launch at KICC brought thousands of young Kenyans to the streets. Baba Yaga won Crew of the Year at the Nganya Awards 2025. This is not just transport.</p>
+      <p>Each vehicle represents a generation of young creatives: painters, fabricators, DJs, sound engineers, and street culture enthusiasts who built something legendary from Nairobi's streets.</p>
+      <div class="tags">
+        <span class="tag">Graffiti Art</span>
+        <span class="tag">Street Culture</span>
+        <span class="tag">DJ Booths</span>
+        <span class="tag">Solar Power</span>
+        <span class="tag">Nairobi Youth</span>
+        <span class="tag">Matatu Culture</span>
+        <span class="tag">Nganya</span>
+        <span class="tag">Kenya One</span>
+      </div>
+      <div style="margin-top: 2rem;">
+        <a href="#book" class="btn-primary">Book the Experience</a>
+      </div>
     </div>
-    <div class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?w=600&q=85" alt="Graffiti bus">
-      <div class="gallery-item-label">MONEYFEST</div>
-    </div>
-    <div class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1543465077-db45d34b88a5?w=600&q=85" alt="Street art bus">
-      <div class="gallery-item-label">NIGHT VIBES</div>
-    </div>
-    <div class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1540420828642-fca2c5c18abe?w=600&q=85" alt="Nairobi streets">
-      <div class="gallery-item-label">NBO STREETS</div>
-    </div>
-    <div class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?w=600&q=85" alt="Matatu exterior">
-      <div class="gallery-item-label">MATRIX PACK</div>
-    </div>
-    <div class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=600&q=85" alt="Bus art">
-      <div class="gallery-item-label">BABA YAGA</div>
-    </div>
-    <div class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1570125909232-eb263c188f7e?w=600&q=85" alt="Custom vehicle">
-      <div class="gallery-item-label">THE RAPTOR</div>
-    </div>
-    <div class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1547626387-71e5fe1c2048?w=600&q=85" alt="Urban Nairobi">
-      <div class="gallery-item-label">CITY RUNS</div>
+    <div class="culture-image reveal">
+      <img src="https://cdn.tuko.co.ke/images/1200x675/1381611c866493fa.jpeg?v=1" alt="RaptorFam culture">
     </div>
   </div>
 </section>
 
 <!-- TESTIMONIALS -->
-<section class="testimonials-section">
-  <div class="section-inner">
-    <div class="section-label">Word on the Streets</div>
-    <h2 class="section-title">THE FAM<br>SPEAKS</h2>
-
-    <div class="testimonials-grid">
-      <div class="testimonial">
-        <p class="test-text">Booked Mood for my birthday and bro… the whole block was outside when it pulled up. The sound system was WILD. This is not a regular matatu, this is an experience.</p>
-        <div class="test-author">
-          <div class="test-avatar">BK</div>
-          <div>
-            <div class="test-name">Brian Kamau</div>
-            <div class="test-role">Nairobi, Birthday Event</div>
-          </div>
+<section id="testimonials">
+  <p class="section-label reveal">Word on the Streets</p>
+  <h2 class="section-title reveal">THE FAM <em>SPEAKS</em></h2>
+  <div class="testi-grid">
+    <div class="testi-card reveal">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">Booked Mood for my birthday and bro… the whole block was outside when it pulled up. The sound system was WILD. This is not a regular matatu, this is an experience.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">BK</div>
+        <div>
+          <div class="testi-name">Brian Kamau</div>
+          <div class="testi-role">Nairobi, Birthday Event</div>
         </div>
       </div>
-      <div class="testimonial">
-        <p class="test-text">We used RaptorFam for our brand activation and the engagement was insane. People were stopping just to take photos. Best marketing spend we've made all year fr.</p>
-        <div class="test-author">
-          <div class="test-avatar">AM</div>
-          <div>
-            <div class="test-name">Amina Mwangi</div>
-            <div class="test-role">Marketing Manager, Nairobi</div>
-          </div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">We used RaptorFam for our brand activation and the engagement was insane. People were stopping just to take photos. Best marketing spend we've made all year fr.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">AM</div>
+        <div>
+          <div class="testi-name">Amina Mwangi</div>
+          <div class="testi-role">Marketing Manager, Nairobi</div>
         </div>
       </div>
-      <div class="testimonial">
-        <p class="test-text">Shot a whole music video on Baba Yaga. The art, the interiors, the vibe — everything was 🔥. Director couldn't believe it was a matatu. Kenya's culture is no joke.</p>
-        <div class="test-author">
-          <div class="test-avatar">TO</div>
-          <div>
-            <div class="test-name">Trey Odhiambo</div>
-            <div class="test-role">Music Video Director</div>
-          </div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">Shot a whole music video on Baba Yaga. The art, the interiors, the vibe — everything was 🔥. Director couldn't believe it was a matatu. Kenya's culture is no joke.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">TO</div>
+        <div>
+          <div class="testi-name">Trey Odhiambo</div>
+          <div class="testi-role">Music Video Director</div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- SOCIAL -->
-<section class="social-section" id="contact">
-  <div class="section-inner">
-    <div class="section-label">Follow the Movement</div>
-    <h2 class="section-title">STAY IN<br>THE LOOP</h2>
-    <p style="font-size: 1rem; color: var(--raptor-muted); max-width: 480px; margin-top: 1rem; line-height: 1.7;">
-      New builds, viral drops, event coverage, and behind-the-scenes footage. Don't sleep on the socials.
-    </p>
+<!-- SOCIALS -->
+<section id="socials">
+  <p class="section-label">Follow the Movement</p>
+  <h2 class="section-title">STAY IN <em style="color:#000">THE LOOP</em></h2>
+  <p style="color:#000; opacity:0.7; max-width:600px; line-height:1.8;">New builds, viral drops, event coverage, and behind-the-scenes footage. Don't sleep on the socials. 41K+ followers and growing.</p>
+  <div class="social-links">
+    <a href="https://www.instagram.com/raptorfam_ke" target="_blank" class="social-link">
+      📸 INSTAGRAM @raptorfam_ke — Follow for daily drops
+    </a>
+    <a href="https://www.tiktok.com/@raptorfam_ke" target="_blank" class="social-link">
+      🎵 TIKTOK @raptorfam_ke — Viral matatu content
+    </a>
+  </div>
+</section>
 
-    <div class="social-cta-wrap">
-      <a class="social-card" href="https://www.instagram.com/raptorfam_ke" target="_blank" rel="noopener">
-        <div class="social-icon">📸</div>
-        <div>
-          <span class="social-platform">INSTAGRAM</span>
-          <span class="social-handle">@raptorfam_ke — Follow for daily drops</span>
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-label reveal">Contact Us</p>
+  <h2 class="section-title reveal">GET IN <em>TOUCH</em></h2>
+  <div class="contact-inner">
+    <div>
+      <div class="contact-detail">
+        <div class="contact-detail-label">Phone / WhatsApp</div>
+        <div class="contact-detail-value">
+          <a href="tel:+254721200200">+254 721 200 200</a>
         </div>
-      </a>
-      <a class="social-card" href="https://www.tiktok.com/@raptorfam_ke" target="_blank" rel="noopener">
-        <div class="social-icon">🎵</div>
-        <div>
-          <span class="social-platform">TIKTOK</span>
-          <span class="social-handle">@raptorfam_ke — Viral matatu content</span>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-label">Bookings</div>
+        <div class="contact-detail-value">
+          <a href="https://wa.me/254721200200" target="_blank">WhatsApp: +254 721 200 200</a>
         </div>
-      </a>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-label">Instagram</div>
+        <div class="contact-detail-value">
+          <a href="https://www.instagram.com/raptorfam_ke" target="_blank">@raptorfam_ke</a>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-label">TikTok</div>
+        <div class="contact-detail-value">
+          <a href="https://www.tiktok.com/@raptorfam_ke" target="_blank">@raptorfam_ke</a>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-label">Location</div>
+        <div class="contact-detail-value">Nairobi, Kenya</div>
+      </div>
+      <div style="margin-top:2rem; display:flex; gap:1rem; flex-wrap:wrap;">
+        <a href="tel:+254721200200" class="btn-primary">📞 Call Now</a>
+        <a href="https://wa.me/254721200200" target="_blank" class="btn-outline">💬 WhatsApp</a>
+      </div>
+    </div>
+    <div>
+      <div class="contact-map">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d255282.3585770993!2d36.7068!3d-1.3031934!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f1172d84d49a7%3A0xf7cf0254b297924c!2sNairobi%2C%20Kenya!5e0!3m2!1sen!2ske!4v1685000000000!5m2!1sen!2ske"
+          allowfullscreen="" loading="lazy">
+        </iframe>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-inner">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <div class="footer-brand-name">RAPTOR<span>FAM</span> KE</div>
-        <p class="footer-tagline">Nairobi's most iconic nganya family. Where art meets transport, music meets movement, and every ride tells a story.</p>
-        <a href="#book" class="btn-primary" style="font-size: 0.75rem;">Book Now</a>
-      </div>
-
-      <div>
-        <div class="footer-heading">Fleet</div>
-        <ul class="footer-links">
-          <li><a href="#fleet">Mood</a></li>
-          <li><a href="#fleet">MoneyFest</a></li>
-          <li><a href="#fleet">Matrix</a></li>
-          <li><a href="#fleet">Baba Yaga</a></li>
-          <li><a href="#fleet">Raptor</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <div class="footer-heading">Bookings</div>
-        <ul class="footer-links">
-          <li><a href="#book">Book a Ride</a></li>
-          <li><a href="#book">Pricing</a></li>
-          <li><a href="#book">Events</a></li>
-          <li><a href="#book">Shoots & Films</a></li>
-          <li><a href="#book">Corporate</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <div class="footer-heading">Connect</div>
-        <ul class="footer-links">
-          <li><a href="https://www.instagram.com/raptorfam_ke" target="_blank">Instagram</a></li>
-          <li><a href="https://www.tiktok.com/@raptorfam_ke" target="_blank">TikTok</a></li>
-          <li><a href="#culture">Our Story</a></li>
-          <li><a href="#gallery">Gallery</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="footer-bottom">
-      <span class="footer-copy">© 2025 RaptorFam KE. All rights reserved. Nairobi, Kenya.</span>
-      <span class="footer-made">Built for the streets ❤️</span>
+  <div>
+    <div class="footer-brand-name">RAPTORFAM KE</div>
+    <p class="footer-tagline">Nairobi's most iconic nganya family.<br>Where art meets transport, music meets movement,<br>and every ride tells a story.</p>
+    <div style="margin-top:1.5rem;">
+      <a href="#book" class="btn-primary" style="font-size:0.8rem; padding:0.7rem 1.5rem;">Book Now</a>
     </div>
   </div>
+  <div class="footer-col">
+    <h4>Fleet</h4>
+    <ul>
+      <li><a href="mood.html">Mood</a></li>
+      <li><a href="moneyfest.html">MoneyFest</a></li>
+      <li><a href="matrix.html">Matrix</a></li>
+      <li><a href="babayaga.html">Baba Yaga</a></li>
+      <li><a href="raptor.html">Raptor</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>Bookings</h4>
+    <ul>
+      <li><a href="#book">Book a Ride</a></li>
+      <li><a href="#book">Pricing</a></li>
+      <li><a href="#book">Events</a></li>
+      <li><a href="#book">Shoots & Films</a></li>
+      <li><a href="#book">Corporate</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>Connect</h4>
+    <ul>
+      <li><a href="https://www.instagram.com/raptorfam_ke" target="_blank">Instagram</a></li>
+      <li><a href="https://www.tiktok.com/@raptorfam_ke" target="_blank">TikTok</a></li>
+      <li><a href="#culture">Our Story</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
 </footer>
+<div class="footer-bottom">
+  <span>© 2025 RaptorFam KE. All rights reserved. Nairobi, Kenya. Built for the streets ❤️</span>
+  <span>+254 721 200 200</span>
+</div>
 
 <script>
-  // Cursor
-  const cursor = document.getElementById('cursor');
-  const ring = document.getElementById('cursorRing');
-  let mx = 0, my = 0, rx = 0, ry = 0;
-  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-  function animateCursor() {
-    cursor.style.left = mx + 'px';
-    cursor.style.top = my + 'px';
-    rx += (mx - rx) * 0.12;
-    ry += (my - ry) * 0.12;
-    ring.style.left = rx + 'px';
-    ring.style.top = ry + 'px';
-    requestAnimationFrame(animateCursor);
-  }
-  animateCursor();
-  document.querySelectorAll('a, button, .fleet-card, .gallery-item, .car-option label').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      cursor.style.transform = 'translate(-50%, -50%) scale(2)';
-      ring.style.transform = 'translate(-50%, -50%) scale(1.4)';
-      ring.style.borderColor = 'rgba(255,45,45,0.8)';
-    });
-    el.addEventListener('mouseleave', () => {
-      cursor.style.transform = 'translate(-50%, -50%) scale(1)';
-      ring.style.transform = 'translate(-50%, -50%) scale(1)';
-      ring.style.borderColor = 'rgba(255,45,45,0.5)';
-    });
-  });
+// Hero slideshow
+let currentSlide = 0;
+const slides = document.querySelectorAll('.hero-slide');
+function nextSlide() {
+  slides[currentSlide].classList.remove('active');
+  currentSlide = (currentSlide + 1) % slides.length;
+  slides[currentSlide].classList.add('active');
+}
+setInterval(nextSlide, 4000);
 
-  // Car radio select
-  document.querySelectorAll('.car-option input[type=radio]').forEach(input => {
-    input.addEventListener('change', function() {
-      document.querySelectorAll('.car-option label').forEach(l => l.style.borderColor = '');
-    });
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+    }
   });
+}, { threshold: 0.1 });
+reveals.forEach(el => observer.observe(el));
 
-  // Scroll reveal
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.style.opacity = '1';
-        e.target.style.transform = 'translateY(0)';
-      }
-    });
-  }, { threshold: 0.1 });
+// Booking -> WhatsApp
+function submitBooking() {
+  const v = id => (document.getElementById(id)?.value || '').trim();
+  const msg =
+    "RaptorFam Booking Request%0A" +
+    "Name: " + (v('bk-name') || '-') + "%0A" +
+    "Phone: " + (v('bk-phone') || '-') + "%0A" +
+    "Date: " + (v('bk-date') || '-') + "%0A" +
+    "Event: " + (v('bk-event') || '-') + "%0A" +
+    "Pickup: " + (v('bk-pickup') || '-') + "%0A" +
+    "Nganya: " + (v('bk-nganya') || '-') + "%0A" +
+    "Details: " + (v('bk-notes') || '-');
+  window.open("https://wa.me/254721200200?text=" + msg, "_blank");
+}
 
-  document.querySelectorAll('.stat-item, .fleet-card, .info-feat, .testimonial, .price-card').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(24px)';
-    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    observer.observe(el);
-  });
-
-  // Form submit
-  document.querySelector('.form-submit').addEventListener('click', function(e) {
-    e.preventDefault();
-    this.textContent = '✓ Request Sent! We\'ll hit you up shortly.';
-    this.style.background = '#1a8a3a';
-    setTimeout(() => {
-      this.textContent = 'Submit Booking Request →';
-      this.style.background = '';
-    }, 4000);
-  });
+// Pre-select nganya if arriving via ?nganya=Mood
+const params = new URLSearchParams(window.location.search);
+const pre = params.get('nganya');
+if (pre) {
+  const sel = document.getElementById('bk-nganya');
+  if (sel) [...sel.options].forEach(o => { if (o.value.toLowerCase() === pre.toLowerCase()) o.selected = true; });
+}
 </script>
-
 </body>
 </html>

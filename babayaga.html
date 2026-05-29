@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BABA YAGA — RaptorFam KE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #0a0a0a;
+  --white: #f5f0e8;
+  --orange: #ff5c00;
+  --gold: #ffb800;
+  --green: #00ff7f;
+  --dark: #111111;
+  --mid: #1a1a1a;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'Space Grotesk', sans-serif;
+  overflow-x: hidden;
+}
+a { color: inherit; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.2rem 4rem;
+  background: rgba(10,10,10,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,92,0,0.2);
+}
+.nav-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem; letter-spacing: 4px; color: var(--orange);
+  text-decoration: none;
+}
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a {
+  color: var(--white); text-decoration: none;
+  font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase;
+  opacity: 0.75; transition: opacity 0.2s;
+}
+.nav-links a:hover { opacity: 1; color: var(--orange); }
+.nav-cta {
+  background: var(--orange); color: #fff;
+  padding: 0.6rem 1.6rem; border-radius: 2px;
+  font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase;
+  text-decoration: none; font-weight: 700; transition: background 0.2s;
+}
+.nav-cta:hover { background: #ff7a33; }
+
+/* BUTTONS */
+.btn-primary {
+  background: var(--orange); color: #fff;
+  padding: 0.9rem 2.5rem; text-decoration: none;
+  font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  font-size: 0.85rem; border-radius: 2px;
+  transition: transform 0.2s, background 0.2s; display: inline-block;
+}
+.btn-primary:hover { transform: translateY(-2px); background: #ff7a33; }
+.btn-outline {
+  border: 1px solid rgba(255,255,255,0.4); color: var(--white);
+  padding: 0.9rem 2.5rem; text-decoration: none;
+  font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+  font-size: 0.85rem; border-radius: 2px; display: inline-block;
+  transition: border-color 0.2s, color 0.2s;
+}
+.btn-outline:hover { border-color: var(--orange); color: var(--orange); }
+
+section { padding: 6rem 4rem; }
+.section-label {
+  font-size: 0.7rem; letter-spacing: 5px; text-transform: uppercase;
+  color: var(--orange); margin-bottom: 1rem;
+}
+.section-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  line-height: 1; margin-bottom: 3rem;
+}
+.section-title em { font-style: normal; color: var(--orange); }
+
+/* Animations */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.visible { opacity: 1; transform: none; }
+
+@media (max-width: 900px) {
+  nav { padding: 1rem 1.5rem; }
+  .nav-links { display: none; }
+  section { padding: 4rem 1.5rem; }
+}
+
+
+/* DETAIL PAGE */
+.detail-hero {
+  position: relative; min-height: 88vh; display: flex; align-items: flex-end;
+  background-size: cover; background-position: center;
+}
+.detail-hero::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(10,10,10,1) 0%, rgba(10,10,10,0.4) 45%, rgba(255,92,0,0.18) 100%);
+}
+.detail-hero-inner { position: relative; z-index: 2; padding: 0 4rem 4rem; max-width: 900px; }
+.back-link {
+  position: absolute; top: 6.5rem; left: 4rem; z-index: 3;
+  font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase;
+  text-decoration: none; color: var(--white); opacity: 0.8;
+}
+.back-link:hover { color: var(--orange); opacity: 1; }
+.detail-badge {
+  background: var(--orange); color: #fff; font-size: 0.7rem; letter-spacing: 2px;
+  padding: 0.3rem 0.9rem; text-transform: uppercase; font-weight: 700;
+  display: inline-block; margin-bottom: 1rem;
+}
+.detail-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(4.5rem, 12vw, 10rem); line-height: 0.85; letter-spacing: 4px;
+  text-shadow: 0 0 80px rgba(255,92,0,0.4);
+}
+.detail-name span { color: var(--orange); }
+.detail-tag { font-size: 1.1rem; opacity: 0.8; margin: 1rem 0 2rem; line-height: 1.6; max-width: 600px; }
+.detail-hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+/* spec strip */
+.spec-strip {
+  background: var(--orange); display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1px;
+}
+.spec { background: var(--orange); padding: 1.6rem 1rem; text-align: center; }
+.spec-val { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 1px; color: #fff; line-height: 1; }
+.spec-key { font-size: 0.68rem; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.85); margin-top: 0.4rem; }
+
+/* story */
+.story-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+@media (max-width: 900px) { .story-inner { grid-template-columns: 1fr; gap: 2.5rem; } }
+.story-text p { font-size: 1rem; line-height: 1.9; opacity: 0.82; margin-bottom: 1.4rem; }
+.story-img { position: relative; border-radius: 4px; overflow: hidden; aspect-ratio: 4/5; }
+.story-img img { width: 100%; height: 100%; object-fit: cover; }
+.story-img::before { content: ''; position: absolute; inset: -1px; border: 2px solid var(--orange); z-index: 2; pointer-events: none; opacity: 0.3; }
+
+/* feature chips */
+.feat-list { list-style: none; display: flex; flex-direction: column; gap: 1.1rem; margin-top: 1rem; }
+.feat { display: flex; gap: 1rem; align-items: flex-start; }
+.feat-ic { font-size: 1.3rem; flex-shrink: 0; }
+.feat-tx { font-size: 0.92rem; line-height: 1.6; opacity: 0.85; }
+.feat-tx strong { display: block; color: var(--white); }
+
+/* gallery */
+.dg-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 200px; gap: 2px;
+}
+@media (max-width: 768px) { .dg-grid { grid-template-columns: repeat(2, 1fr); } }
+.dg-item { overflow: hidden; position: relative; }
+.dg-item img { width: 100%; height: 100%; object-fit: cover; filter: saturate(0.85); transition: transform 0.6s, filter 0.3s; }
+.dg-item:hover img { transform: scale(1.06); filter: saturate(1.2); }
+.dg-item.wide { grid-column: span 2; }
+.dg-item.tall { grid-row: span 2; }
+@media (max-width: 768px) { .dg-item.wide, .dg-item.tall { grid-column: auto; grid-row: auto; } }
+
+/* other rides */
+.other-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 2px; }
+.other-card { position: relative; aspect-ratio: 4/3; overflow: hidden; text-decoration: none; }
+.other-card img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.7); transition: transform 0.5s, filter 0.3s; }
+.other-card:hover img { transform: scale(1.06); filter: brightness(1); }
+.other-card-name {
+  position: absolute; left: 0; right: 0; bottom: 0; padding: 1rem;
+  font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 2px;
+  background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+}
+.cta-band { background: var(--mid); text-align: center; }
+.cta-band h2 { font-family: 'Syne', sans-serif; font-size: clamp(2rem,4vw,3.2rem); margin-bottom: 1.5rem; }
+.cta-band h2 em { font-style: normal; color: var(--orange); }
+footer.mini { background: var(--dark); border-top: 1px solid rgba(255,92,0,0.2); padding: 2.5rem 4rem; text-align: center; }
+footer.mini .fb { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 4px; color: var(--orange); }
+footer.mini p { opacity: 0.5; font-size: 0.82rem; margin-top: 0.6rem; }
+@media (max-width: 900px) { .detail-hero-inner { padding: 0 1.5rem 2.5rem; } .back-link { left: 1.5rem; } }
+
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">RAPTORFAM</a>
+  <ul class="nav-links">
+    <li><a href="index.html#fleet">Fleet</a></li>
+    <li><a href="index.html#book">Book a Ride</a></li>
+    <li><a href="index.html#culture">Culture</a></li>
+    <li><a href="index.html#gallery">Gallery</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+  <a href="index.html#book" class="nav-cta">Book Now</a>
+</nav>
+
+<header class="detail-hero" style="background-image:url('https://cdn.tuko.co.ke/images/1200x675/2a1e36efef4914f3.jpeg?v=1')">
+  <a href="index.html#fleet" class="back-link">← Back to Fleet</a>
+  <div class="detail-hero-inner">
+    <span class="detail-badge">Crew of the Year 🏆</span>
+    <h1 class="detail-name">BABA<span>YAGA</span></h1>
+    <p class="detail-tag">Ongata Rongai's most fierce matatu — and winner of Crew of the Year at the Nganya Awards 2025.</p>
+    <div class="detail-hero-btns">
+      <a href="index.html?nganya=BABA YAGA#book" class="btn-primary">Book BABA YAGA</a>
+      <a href="#gallery" class="btn-outline">See the Photos</a>
+    </div>
+  </div>
+</header>
+
+<div class="spec-strip"><div class="spec"><div class="spec-val">🏆</div><div class="spec-key">Crew of the Year</div></div><div class="spec"><div class="spec-val">Rongai</div><div class="spec-key">Route</div></div><div class="spec"><div class="spec-val">Fierce</div><div class="spec-key">Design</div></div><div class="spec"><div class="spec-val">2025</div><div class="spec-key">Award Winner</div></div><div class="spec"><div class="spec-val">Iconic</div><div class="spec-key">Road Presence</div></div></div>
+
+<section>
+  <div class="story-inner">
+    <div class="story-text">
+      <p class="section-label reveal">The Story</p>
+      <h2 class="section-title reveal" style="font-size:clamp(2rem,4vw,3rem);">INSIDE <em>BABA YAGA</em></h2>
+      <p>Baba Yaga earned its name — fierce, unforgettable and impossible to ignore. Plying the Ongata Rongai route, it's become a symbol of just how far the craft of nganya building has come.</p><p>In 2025 the crew took home Crew of the Year at the Nganya Awards, a recognition of the artistry, sound engineering and showmanship behind the build.</p><p>Bold artwork, commanding presence and a crew that lives the culture — Baba Yaga is a fan favourite for events that need real road impact.</p>
+      <ul class="feat-list reveal"><li class="feat"><span class="feat-ic">🏆</span><div class="feat-tx"><strong>Award-Winning Crew</strong>Crew of the Year, Nganya Awards 2025.</div></li><li class="feat"><span class="feat-ic">🎨</span><div class="feat-tx"><strong>Fierce Artwork</strong>Aggressive, unforgettable graffiti and detailing.</div></li><li class="feat"><span class="feat-ic">🔊</span><div class="feat-tx"><strong>Big Sound</strong>A sound system built to dominate the road.</div></li><li class="feat"><span class="feat-ic">🔥</span><div class="feat-tx"><strong>Road Presence</strong>One of the most commanding nganyas in the city.</div></li></ul>
+    </div>
+    <div class="story-img reveal"><img src="https://cdn.tuko.co.ke/images/1200x675/d561d67a16870189.jpeg?v=1" alt="BABA YAGA"></div>
+  </div>
+</section>
+
+<section id="gallery" style="padding-top:0;">
+  <p class="section-label reveal">Gallery</p>
+  <h2 class="section-title reveal">BABA YAGA. <em>UP CLOSE.</em></h2>
+  <div class="dg-grid"><div class="dg-item wide tall"><img src="https://cdn.tuko.co.ke/images/1200x675/2a1e36efef4914f3.jpeg?v=1" alt="BABA YAGA" loading="lazy"></div><div class="dg-item "><img src="https://cdn.tuko.co.ke/images/1200x675/d561d67a16870189.jpeg?v=1" alt="BABA YAGA" loading="lazy"></div><div class="dg-item "><img src="https://cdn.tuko.co.ke/images/1200x675/1166019093a00952.jpeg?v=1" alt="BABA YAGA" loading="lazy"></div><div class="dg-item wide"><img src="https://cdn.tuko.co.ke/images/1200x675/26b9da2442fd2c9e.jpeg?v=1" alt="BABA YAGA" loading="lazy"></div><div class="dg-item tall"><img src="https://cdn.tuko.co.ke/images/1200x675/8f89fab43ca445cc.jpeg?v=1" alt="BABA YAGA" loading="lazy"></div><div class="dg-item "><img src="https://cdn.tuko.co.ke/images/1200x675/1381611c866493fa.jpeg?v=1" alt="BABA YAGA" loading="lazy"></div></div>
+</section>
+
+<section style="padding-bottom:0;">
+  <p class="section-label reveal">More of the Family</p>
+  <h2 class="section-title reveal">THE REST OF THE <em>FLEET</em></h2>
+  <div class="other-grid">
+      <a href="mood.html" class="other-card">
+        <img src="https://cdn.tuko.co.ke/images/1200x675/d561d67a16870189.jpeg?v=1" alt="MOOD" loading="lazy">
+        <div class="other-card-name">MOOD</div>
+      </a>
+      <a href="moneyfest.html" class="other-card">
+        <img src="https://cdn.tuko.co.ke/images/1200x675/26b9da2442fd2c9e.jpeg?v=1" alt="MONEYFEST" loading="lazy">
+        <div class="other-card-name">MONEYFEST</div>
+      </a>
+      <a href="matrix.html" class="other-card">
+        <img src="https://cdn.tuko.co.ke/images/1200x675/1166019093a00952.jpeg?v=1" alt="MATRIX" loading="lazy">
+        <div class="other-card-name">MATRIX</div>
+      </a>
+      <a href="raptor.html" class="other-card">
+        <img src="https://cdn.tuko.co.ke/images/1200x675/8f89fab43ca445cc.jpeg?v=1" alt="RAPTOR" loading="lazy">
+        <div class="other-card-name">RAPTOR</div>
+      </a>
+  </div>
+</section>
+
+<section class="cta-band">
+  <h2>READY TO RIDE <em>BABA YAGA?</em></h2>
+  <p style="opacity:0.7; margin-bottom:2rem;">Call or WhatsApp <a href="tel:+254721200200" style="color:var(--orange);font-weight:700;">+254 721 200 200</a> — we confirm within 2 hours.</p>
+  <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+    <a href="index.html?nganya=BABA YAGA#book" class="btn-primary">Book BABA YAGA</a>
+    <a href="https://wa.me/254721200200" target="_blank" class="btn-outline">💬 WhatsApp Us</a>
+  </div>
+</section>
+
+<footer class="mini">
+  <div class="fb">RAPTORFAM KE</div>
+  <p>Nairobi's most iconic nganya family • +254 721 200 200 • @raptorfam_ke</p>
+</footer>
+<script>
+const reveals = document.querySelectorAll('.reveal');
+const ob = new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.1});
+reveals.forEach(el=>ob.observe(el));
+</script>
+</body>
+</html>
